@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .errorMessage {
+                color: green;
+                -webkit-animation: fadeinout 4s linear forwards;
+                animation: fadeinout 4s linear forwards;
+                opacity: 0;
+            }
+
+            @-webkit-keyframes fadeinout {
+                50% { opacity: 1; }
+            }
+
+            @keyframes fadeinout {
+                50% { opacity: 1; }
+            }
+        </style>
+
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}"/>
+        <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"/></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"/></script>
+        
+        <div class="btn-group">
+            {% if not current_user.is_anonymous %}
+                <a href="{{ url_for('logout') }}">
+                    <button type="submit" name="logout" class="btn btn-primary"> Logout </button>
+                </a>
+
+                <a href="{{ url_for('home') }}">
+                    <button type="submit" name="homeGet" class="btn btn-primary"> Home </button>
+                </a>
+
+                <a href="{{ url_for('purchase') }}">
+                    <button type="submit" name="purchaseGet" class="btn btn-primary"> Purchase </button>
+                </a>
+                
+                <a href="{{ url_for('sales') }}">
+                    <button type="submit" name="salesGet" class="btn btn-primary"> Sales </button>
+                </a>
+
+                {% if current_user.is_admin %}
+                <a href="{{ url_for('register') }}">
+                    <button type="submit" name="register" class="btn btn-primary"> Add User </button>
+                </a>
+                {% endif %}
+
+            {% endif %}
+        </div>
+
+        {% block head %} {% endblock %}
+    </head>
+    
+    <body>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="errorMessage">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% block content %} {% endblock %}
+    </body>
+</html>

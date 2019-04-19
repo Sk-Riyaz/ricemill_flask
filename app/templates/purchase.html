@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {% if data.title %}
+        <title> {{ data.title }} </title>
+    {% else %}
+        <title> Purchase </title>
+    {% endif %}
+
+    {% if data.heading %}
+        <h1> {{ data.heading }} </h1>
+    {% else %}
+        <h1> Purchase </h1>
+    {% endif %}
+{% endblock %}
+
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
+    
+{% block content %}
+    <form name="purchase" id="purchase" method="post">
+        {{ form.hidden_tag() }}
+        <p> {{ form.rst_number.label }}     {{ form.rst_number() }} </p>
+        {% for error in form.rst_number.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.weight.label }}         {{ form.weight() }} </p>
+        {% for error in form.weight.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.variety.label }}        {{ form.variety() }} </p>
+        {% for error in form.variety.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.agent.label }}          {{ form.agent() }} </p>
+        {% for error in form.agent.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.moisture.label }}       {{ form.moisture() }} </p>
+        {% for error in form.moisture.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.rate.label }}           {{ form.rate() }} </p>
+        {% for error in form.rate.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.date.label }}           {{ form.date() }} </p>
+        {% for error in form.date.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.amount.label }}         {{ form.amount() }} </p>
+        {% for error in form.amount.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.submit() }} </p>
+    </form>
+
+     <!-- onsubmit create invoice with formula -->
+{% endblock %}

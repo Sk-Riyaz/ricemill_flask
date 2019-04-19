@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .errorMessage {
+                color: green;
+                -webkit-animation: fadeinout 4s linear forwards;
+                animation: fadeinout 4s linear forwards;
+                opacity: 0;
+            }
+
+            @-webkit-keyframes fadeinout {
+                50% { opacity: 1; }
+            }
+
+            @keyframes fadeinout {
+                50% { opacity: 1; }
+            }
+        </style>
+        
+        <div class="btn-group">
+            <a href="{{ url_for('home') }}">
+                <button type="submit" name="purchaseGet" class="btn btn-primary"> Home </button>
+            </a>
+
+            <a href="{{ url_for('purchase') }}">
+                <button type="submit" name="purchaseGet" class="btn btn-primary"> Purchase </button>
+            </a>
+            
+            <a href="{{ url_for('sales') }}">
+                <button type="submit" name="salesGet" class="btn btn-primary"> Sales </button>
+            </a>            
+        </div>
+
+        {% block head %} {% endblock %}
+    </head>
+    
+    <body>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %} {% endblock %}
+    </body>
+</html>
