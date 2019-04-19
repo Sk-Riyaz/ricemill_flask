@@ -17,12 +17,38 @@
                 50% { opacity: 1; }
             }
         </style>
-
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='custom.css') }}"/>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}"/>
+
         <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"/></script>
         <script type="text/javascript" src="{{ url_for('static', filename='jquery.min.js') }}"/></script>
+        {% if not current_user.is_anonymous %}
+
+
+        <ul class="nav nav-tabs justify-content-end">
+                <li class="nav-item active">
+                  <a class="nav-link " href="{{ url_for('home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('sales') }}">Sales</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('purchase') }}">Purchase</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link disabled" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+              </ul>
         
-        <div class="btn-group">
+     
+        {% endif %}
+
+        
+
+
+
+
+<!--         <div class="btn-group">
             {% if not current_user.is_anonymous %}
                 <a href="{{ url_for('logout') }}">
                     <button type="submit" name="logout" class="btn btn-primary"> Logout </button>
@@ -47,7 +73,7 @@
                 {% endif %}
 
             {% endif %}
-        </div>
+        </div> -->
 
         {% block head %} {% endblock %}
     </head>

@@ -101,10 +101,7 @@ class AgentForm(FlaskForm):
 
 
 class PurchaseForm(FlaskForm):
-    rst_number = FloatField('RST No', validators=[
-        DataRequired(message="RST Number is required"),
-        InputRequired(message="RST Number is required")
-    ])
+    rst_number = FloatField('RST No')
     weight = FloatField("Weight", validators=[
         DataRequired(message="Weight is required"),
         InputRequired(message="Weight is required")
