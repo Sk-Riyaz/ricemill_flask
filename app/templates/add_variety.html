@@ -20,23 +20,8 @@
     <form name="register" id="register" method="post">
         {{ form.hidden_tag() }}
         
-        <p> {{ form.username.label }} {{ form.username(size=32) }} </p>
-        {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    
-        <p> {{ form.password.label }} {{ form.password(size=32) }} </p>>
-        {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        <p> {{ form.email.label }} {{ form.email }} </p>>
-        {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        <p> {{ form.roles.label }} {{ form.roles }} </p>>
-        {% for error in form.password.errors %}
+        <p> {{ form.name.label }} {{ form.name(size=32) }} </p>
+        {% for error in form.name.errors %}
             <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
 

@@ -44,7 +44,7 @@
         <p> {{ form.date.label }}               {{ form.date() }} </p>
         <p> {{ form.quintol.label }}            {{ form.quintol() }} </p>
         <p> {{ form.rate.label }}               {{ form.rate() }} </p>
-        <p> {{ form.amount.label }}             {{ form.amount() }} </p>
+        <p> {{ form.amount.label }}             {{ form.amount(disabled=disabled) }} </p>
         <p> {{ form.submit() }} </p>
     </form>
 {% endblock %}

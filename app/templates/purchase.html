@@ -12,6 +12,15 @@
     {% else %}
         <h1> Purchase </h1>
     {% endif %}
+    <script>
+        window.onload = function() {
+            alert("hello");
+            document.getElementById('purchase').onsubmit = function() {
+                var txt = document.getElementById('amount');
+                txt.value = 100;
+            };
+        };​
+    </script>
 {% endblock %}
 
 <!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
@@ -49,12 +58,12 @@
             <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
 
-        <p> {{ form.date.label }}           {{ form.date() }} </p>
+        <p> {{ form.date.label }}           {{ form.date(placeholder="dd-mm-yyyy") }} </p>
         {% for error in form.date.errors %}
             <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
 
-        <p> {{ form.amount.label }}         {{ form.amount() }} </p>
+        <p> {{ form.amount.label }}         {{ form.amount(disabled=disabled) }} </p>
         {% for error in form.amount.errors %}
             <span style="color: red;">[{{ error }}]</span>
         {% endfor %}
