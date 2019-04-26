@@ -3,8 +3,12 @@ from app import db
 def create_super():
     #role = Roles.query.filter_by(name="").first()
     try:
-        role = Roles(name="ADMINISTRATOR")
-        db.session.add(role)
+        role_s = Roles(name="SUPER_USER")
+        role_a = Roles(name="ADMINISTRATOR")
+        role_u = Roles(name="USER")
+        db.session.add(role_s)
+        db.session.add(role_a)
+        db.session.add(role_u)
         db.session.commit()
     except Exception as e:
         db.session.rollback()
