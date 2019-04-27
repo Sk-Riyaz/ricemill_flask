@@ -40,16 +40,16 @@
                     <button type="submit" name="salesGet" class="btn btn-primary"> Sales </button>
                 </a>
 
-                {% if current_user.is_admin %}
-                <a href="{{ url_for('register', utype='user') }}">
+                {% if current_user.is_admin() %}
+                <a href="{{ url_for('register', form_type='user') }}">
                     <button type="submit" name="adduser" class="btn btn-primary"> Add User </button>
                 </a>
 
-                <a href="{{ url_for('register', utype='agent') }}">
+                <a href="{{ url_for('register', form_type='agent') }}">
                     <button type="submit" name="addagent" class="btn btn-primary"> Add Agent </button>
                 </a>
 
-                <a href="{{ url_for('register', utype='variety') }}">
+                <a href="{{ url_for('register', form_type='variety') }}">
                     <button type="submit" name="addvariety" class="btn btn-primary"> Add Variety </button>
                 </a>
                 {% endif %}

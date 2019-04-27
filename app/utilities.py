@@ -2,27 +2,27 @@ from app import db
 from app.models import Roles, Variety
 
 
-def getSelectChoice(func):
+def get_select_choice(func):
     def fn(**kwargs):
-        selectOption = [(0, "Select")]
-        selectOption.extend(func(**kwargs))
-        return selectOption
+        select_option = [(0, "Select")]
+        select_option.extend(func(**kwargs))
+        return select_option
     return fn
 
 
-@getSelectChoice
-def getVarietyChoices(**kwargs):
+@get_select_choice
+def get_variety_choices(**kwargs):
     return [(v.id, v.name) for v in db.session.query(Variety).all()]
     return []
 
 
-@getSelectChoice
-def getAgentChoices(**kwargs):
+@get_select_choice
+def get_agent_choices(**kwargs):
     return [(agent.id, agent.name) for agent in kwargs.get("type")().query.all()]
     return []
 
 
-@getSelectChoice
-def getRoles(**kwargs):
+@get_select_choice
+def get_roles(**kwargs):
     return [(r.id, r.name) for r in Roles.query.all()]
     return []

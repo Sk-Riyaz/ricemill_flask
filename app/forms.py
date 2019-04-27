@@ -3,13 +3,14 @@ import re
 from flask_wtf import FlaskForm
 from wtforms import (BooleanField, IntegerField, FloatField, StringField,
                      PasswordField, SubmitField, DateField, SelectField,
-                     TextAreaField, RadioField)
+                     TextAreaField)
 from wtforms.validators import (DataRequired, InputRequired,
                                 ValidationError, EqualTo, Email, Optional)
 
 from app import app
 from app.models import User, Roles, Variety, SaleAgent, PurchaseAgent
 from app import utilities
+from flask_login import current_user, login_required
 
 
 def validate_number(mobile):
@@ -43,6 +44,29 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 
+class UpdatePasswordForm(FlaskForm):
+    prev_password = PasswordField('Password', validators=[
+        DataRequired(message="Password is required"),
+        InputRequired(message="Password is required")
+    ])
+    new_password = PasswordField('Password', validators=[
+        DataRequired(message="Password is required"),
+        InputRequired(message="Password is required")
+    ])
+    repeat_password = PasswordField('Password', validators=[
+        DataRequired(message="Password is required"),
+        InputRequired(message="Password is required")
+    ])
+    submit = SubmitField('Sign In')
+
+    @staticmethod
+    def validate_prev_password(self):
+        if current_user.is_anonymous:
+            raise ValidationError('Invalid user')
+        if current_user.check_pasword(self.prev_password):
+            raise ValidationError("Incorrect password")
+
+
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[
         DataRequired(message="UserName is required"),
@@ -60,15 +84,18 @@ class RegistrationForm(FlaskForm):
     roles = SelectField('Role', coerce=int, validators=[
         DataRequired(message="Role is required"),
         InputRequired(message="Role is required")],
-        choices=utilities.getRoles()
+        choices=utilities.get_roles()
     )
+    active = BooleanField("Activate User")
     submit = SubmitField('Add User')
 
+    @staticmethod
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Please use a different username.')
 
+    @staticmethod
     def validate_email(self, email):
         user = User.query.filter_by(email=email.data).first()
         if user is not None:

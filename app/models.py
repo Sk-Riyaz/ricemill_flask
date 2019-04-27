@@ -14,12 +14,21 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-class User(UserMixin, db.Model):
+class BaseModel(db.Model):
+    __abstract__ = True
+    created_on = db.Column(
+        db.DateTime, index=True, default=datetime.utcnow, nullable=False)
+    updated_on = db.Column(
+        db.DateTime, default=db.func.now(), onupdate=db.func.now())
+
+
+class User(UserMixin, BaseModel):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
+    active = db.Column(db.Boolean, default=False, nullable=False)
     # Need to delete after confirmation. Basically not needed.
     #roles = db.relationship('Roles', uselist=False, secondary='user_roles')
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
@@ -40,7 +49,7 @@ class User(UserMixin, db.Model):
         return self.role.name
 
     def is_admin(self):
-        return self.get_role() in ['SUPER_USER', 'ADMINISTRATOR']
+        return self.get_role() in [constants.SUPER_USER_STR, constants.ADMINISTRATOR_STR]
 
     def __repr__(self):
         return f'<User Id: {self.id} Name: {self.username} Role: {self.get_role()}>'
@@ -65,7 +74,7 @@ class UserRoles(db.Model):
 """
 
 
-class PurchaseAgent(db.Model):
+class PurchaseAgent(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, nullable=False)
     email = db.Column(db.String(120))
@@ -79,7 +88,7 @@ class PurchaseAgent(db.Model):
         return f'<Agent Id: {self.id} Name: {self.name} Phone: {self.mobile}>'
 
 
-class SaleAgent(db.Model):
+class SaleAgent(BaseModel):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, nullable=False)
     email = db.Column(db.String(120))
@@ -102,7 +111,7 @@ class Variety(db.Model):
         return f'<Variety Id: {self.id} Name: {self.name}>'
 
 
-class Purchase(db.Model):
+class Purchase(BaseModel):
     __tablename__ = "purchases"
     id = db.Column(db.Integer, primary_key=True)
     rstnumber = db.Column(db.Float, nullable=False)
@@ -121,7 +130,7 @@ class Purchase(db.Model):
         return f'<Puchase Id: {self.id} rstnumber: {self.rstnumber} Agent: {self.agent_id} Time: {self.timestamp}>'
 
 
-class Sale(db.Model):
+class Sale(BaseModel):
     __tablename__ = "sales"
     id = db.Column(db.Integer, primary_key=True)
     party_name = db.Column(db.String(128), nullable=False)
