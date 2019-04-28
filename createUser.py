@@ -1,6 +1,7 @@
 from app.models import Roles, User
 from app import db, create_app
 from config import Config
+import sys
 
 """
 def create_super():
@@ -35,6 +36,10 @@ def create_super():
         db.session.rollback()
 """
 
+if len(sys.argv) < 2:
+    print("Invalid usage. Please provide user password as argument")
+    exit()
+
 def create_roles():
     app = create_app(Config)
     app_context = app.app_context()
@@ -67,7 +72,7 @@ def create_super_user():
     try:
         role_id = Roles.query.filter_by(name="SUPER_USER").first()
         user = User(username="super", email="super@mymail.com", role_id=role_id.id)
-        user.set_password("super")
+        user.set_password(sys.argv[1])
         db.session.add(user)
         db.session.commit()
     except Exception as e:
