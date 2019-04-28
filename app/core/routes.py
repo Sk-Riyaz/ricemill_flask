@@ -5,8 +5,10 @@ from werkzeug.urls import url_parse
 
 from functools import wraps
 
-from app import app, db
-from app.forms import LoginForm, RegistrationForm, ChangePasswordForm, AgentForm, PurchaseForm, SalesForm, VarietyForm
+from app.core import bp
+from app import db#, logger
+#from app.auth import LoginForm, RegistrationForm, ChangePasswordForm, AgentForm, PurchaseForm, SalesForm, VarietyForm
+from app.core.forms import PurchaseForm, SalesForm
 from app.models import User, PurchaseAgent, SaleAgent, Variety, Roles, Purchase, Sale
 from app import utilities
 from config import Config
@@ -17,10 +19,12 @@ def roles_required(roles):
         @wraps(fn)
         def decorated_view(*args, **kwargs):
             if not current_user.is_authenticated:
-                return app.login_manager.unauthorized()
+                #return login_manager.unauthorized()
+                return False
             urole = current_user.get_role()
             if urole is None or urole not in roles:
-                return app.login_manager.unauthorized()
+                #return login_manager.unauthorized()
+                return False
             return fn(*args, **kwargs)
         return decorated_view
     return wrapper
@@ -35,11 +39,11 @@ def write_to_db(data, db_action):
         db.session.commit()
         return 200, "Success"
     except Exception as e:
-        app.logger.error(e)
+        #logger.error(e)
         db.session.rollback()
         return 500, e
 
-
+"""
 def user_form_handler(form, action):
     if action == "add":
         user = User(username=form.username.data,
@@ -65,7 +69,7 @@ def agent_form_handler(form, action):
         "1": PurchaseAgent,
         "2": SaleAgent
     }
-    app.logger.info("data is coming")
+    #logger.info("data is coming")
     cur_model = agent_type_2_model.get(form.agent_type.data)
     if cur_model is None:
         abort(500)
@@ -82,7 +86,7 @@ def agent_form_handler(form, action):
 def variety_form_handler(form, action):
     variety = Variety(name=form.name.data)
     return write_to_db(variety)
-
+"""
 
 def purchase_form_handler(form):
     purchase_data = Purchase(
@@ -114,7 +118,7 @@ def sale_form_handler(form):
     )
     return write_to_db(sale_data)
 
-
+"""
 def handle_form(form, form_type, action):
     if form is None or action is None:
         abort(500)
@@ -154,112 +158,10 @@ def get_form_for_type(form_type):
     if form is None:
         abort(404)
     return form
+"""
 
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        flash("User already loggedin")
-        return redirect(url_for('home'))
-
-    form = LoginForm()
-    if form.validate_on_submit():
-        # flash('Login requested for user {}, remember_me={}'.format(
-        #    form.username.data, form.remember_me.data))
-
-        user = User.query.filter_by(username=form.username.data).first()
-        if user is None or not user.check_password(form.password.data):
-            flash("Invalid user or password")
-            return redirect(url_for('login'))
-        flash("User loggedin")
-        login_user(user, remember=form.remember_me.data)
-        next_page = request.args.get('next')
-        print(current_user.is_admin())
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('home')
-        return redirect(next_page)
-
-    return render_template("login.html", form=form)
-
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
-
-
-@app.route('/add/<form_type>', methods=['GET', 'POST'])
-@login_required
-@roles_required([Config.SUPER_USER_STR, Config.ADMINISTRATOR_STR])
-def register(form_type):
-    generic_data = {
-        "title": f"Add {str.capitalize(form_type)}",
-        "heading": f"Add {str.capitalize(form_type)}"
-    }
-    form_dict = {
-        'user': RegistrationForm,
-        'agent': AgentForm,
-        'variety': VarietyForm
-    }
-    form = form_dict.get(form_type)
-    if form is None:
-        abort(404)
-
-    form = form()
-    if form.validate_on_submit():
-        status, e = handle_form(form, form_type, 'add')
-        # app.logger.info("status: ", status, e)
-        if status != 200:
-            app.logger.error(f"status: {status}, {e}")
-            abort(status)
-        flash(f"{form_type} inserted successfully")
-        app.logger.info(f"{form_type} inserted successfully")
-        return redirect(form_type)
-    return render_template(f"add_{form_type}.html", form=form, data=generic_data)
-
-
-@app.route('/change_password', methods=['GET', 'POST'])
-@login_required
-def change_password():
-    generic_data = {
-        "title": "Change Password",
-        "heading": "Change Password"
-    }
-    form = ChangePasswordForm()
-    if form.validate_on_submit():
-        print()
-        pass
-    return render_template(f"change_password.html", form=form, data=generic_data)
-
-
-@app.route('/admin/<action>/<form_type>', methods=['GET', 'POST'])
-@login_required
-@roles_required([Config.SUPER_USER_STR, Config.ADMINISTRATOR_STR])
-def admin_actions(action, form_type):
-    generic_data = {
-        "title": f"{str.capitalize(action)} {str.capitalize(form_type)}",
-        "heading": f"{str.capitalize(action)} {str.capitalize(form_type)}"
-    }
-
-    if not is_form_support_action(form_type, action):
-        abort(404)
-
-    form = get_form_for_type(form_type)()
-    if form.validate_on_submit():
-        status, e = handle_form(form, form_type, action)
-        # app.logger.info("status: ", status, e)
-        if status != 200:
-            app.logger.error(f"status: {status}, {e}")
-            abort(status)
-        flash(f"{form_type} {action}ed successfully")
-        app.logger.info(f"{form_type} {action}ed successfully")
-        return redirect(form_type)
-    return render_template(f"{action}_{form_type}.html", form=form, data=generic_data)
-
-
-@app.route('/home')
+@bp.route('/home')
 @login_required
 def home():
     generic_data = {
@@ -270,7 +172,7 @@ def home():
     return render_template("home.html", data=generic_data)
 
 
-@app.route('/purchase', methods=['GET', 'POST'])
+@bp.route('/purchase', methods=['GET', 'POST'])
 def purchase():
     generic_data = {
         "title": "Purchase",
@@ -285,18 +187,18 @@ def purchase():
         if status != 200:
             abort(status)
         flash("Purchase inserted Successfully")
-        app.logger.info("Purchase inserted Successfully")
-        return redirect('purchase')
+        #logger.info("Purchase inserted Successfully")
+        return redirect(url_for('core.purchase'))
 
     return render_template("purchase.html", data=generic_data, form=form)
 
 
-@app.route('/sales', methods=['GET', 'POST'])
+@bp.route('/sales', methods=['GET', 'POST'])
 def sales():
     generic_data = {
         "title": "Sales",
         "heading": "Sales"
-        }
+    }
 
     form = SalesForm()
     form.agent.choices = utilities.get_agent_choices(type=SaleAgent)
@@ -305,9 +207,8 @@ def sales():
         status, e = sale_form_handler(form)
         if status != 200:
             abort(status)
-        app.logger.info("Sale inserted Successfully")
+        #logger.info("Sale inserted Successfully")
         flash("Sale inserted Successfully")
-        return redirect('sales')
+        return redirect(url_for('core.sales'))
 
     return render_template("sales.html", data=generic_data, form=form)
-
