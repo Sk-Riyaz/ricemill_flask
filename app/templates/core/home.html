@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {% if data.title %}
+        <title> {{ data.title }} </title>
+    {% else %}
+        <title> Purchase </title>
+    {% endif %}
+
+    {% if data.heading %}
+        <h1> {{ data.heading }} </h1>
+    {% else %}
+        <h1> Purchase </h1>
+    {% endif %}
+{% endblock %}
+
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
+
+<input type="checkbox" name="Boiled" value="1"> Boiled <br>
+        <input type="checkbox" name="HalfBoiled" value="1"> Half Boiled <br>
+
+        <p> Amount </p> <p>(Quintol * Rate) + (Quintol * Rate*GST/100)</p>
+
+    
+{% block content %}
+    <h1>HELLOOOOOOOOOOOOOOO</h1>
+{% endblock %}

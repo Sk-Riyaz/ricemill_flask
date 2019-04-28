@@ -24,40 +24,41 @@
         
         <div class="btn-group">
             {% if not current_user.is_anonymous %}
-                <a href="{{ url_for('logout') }}">
-                    <button type="submit" name="logout" class="btn btn-primary"> Logout </button>
-                </a>
-
-                <a href="{{ url_for('home') }}">
+                <a href="{{ url_for('core.home') }}">
                     <button type="submit" name="homeGet" class="btn btn-primary"> Home </button>
                 </a>
-
-                <a href="{{ url_for('purchase') }}">
-                    <button type="submit" name="purchaseGet" class="btn btn-primary"> Purchase </button>
-                </a>
                 
-                <a href="{{ url_for('sales') }}">
-                    <button type="submit" name="salesGet" class="btn btn-primary"> Sales </button>
-                </a>
+                {% if current_user.is_admin() %}
+                    <a href="{{ url_for('core.purchase') }}">
+                        <button type="submit" name="purchaseGet" class="btn btn-primary"> Purchase </button>
+                    </a>
+                    
+                    <a href="{{ url_for('core.sales') }}">
+                        <button type="submit" name="salesGet" class="btn btn-primary"> Sales </button>
+                    </a>
+                {% endif %}
 
-                <a href="{{ url_for('change_password') }}">
+                <a href="{{ url_for('auth.change_password') }}">
                     <button type="submit" name="changePassGet" class="btn btn-primary"> Change Password </button>
                 </a>
 
-                {% if current_user.is_admin() %}
-                <a href="{{ url_for('register', form_type='user') }}">
-                    <button type="submit" name="adduser" class="btn btn-primary"> Add User </button>
-                </a>
+                {% if current_user.is_super_user() %}
+                    <a href="{{ url_for('admin.register', form_type='user') }}">
+                        <button type="submit" name="adduser" class="btn btn-primary"> Add User </button>
+                    </a>
 
-                <a href="{{ url_for('register', form_type='agent') }}">
-                    <button type="submit" name="addagent" class="btn btn-primary"> Add Agent </button>
-                </a>
+                    <a href="{{ url_for('admin.register', form_type='agent') }}">
+                        <button type="submit" name="addagent" class="btn btn-primary"> Add Agent </button>
+                    </a>
 
-                <a href="{{ url_for('register', form_type='variety') }}">
-                    <button type="submit" name="addvariety" class="btn btn-primary"> Add Variety </button>
-                </a>
+                    <a href="{{ url_for('admin.register', form_type='variety') }}">
+                        <button type="submit" name="addvariety" class="btn btn-primary"> Add Variety </button>
+                    </a>
                 {% endif %}
 
+                <a href="{{ url_for('auth.logout') }}">
+                    <button type="submit" name="logout" class="btn btn-primary"> Logout </button>
+                </a>
             {% endif %}
         </div>
 

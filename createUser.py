@@ -1,5 +1,6 @@
 from app.models import Roles, User
 from app import db
+
 def create_super():
     #role = Roles.query.filter_by(name="").first()
     try:

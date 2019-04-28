@@ -48,8 +48,11 @@ class User(UserMixin, BaseModel):
     def get_role(self):
         return self.role.name
 
+    def is_super_user(self):
+        return self.get_role() == Config.SUPER_USER_STR
+
     def is_admin(self):
-        return self.get_role() in [Config.SUPER_USER_STR, Config.ADMINISTRATOR_STR]
+        return self.get_role() == Config.ADMINISTRATOR_STR
 
     def __repr__(self):
         return f'<User Id: {self.id} Name: {self.username} Role: {self.get_role()}>'
