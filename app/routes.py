@@ -6,9 +6,10 @@ from werkzeug.urls import url_parse
 from functools import wraps
 
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, AgentForm, PurchaseForm, SalesForm, VarietyForm
+from app.forms import LoginForm, RegistrationForm, ChangePasswordForm, AgentForm, PurchaseForm, SalesForm, VarietyForm
 from app.models import User, PurchaseAgent, SaleAgent, Variety, Roles, Purchase, Sale
-from app import constants, utilities
+from app import utilities
+from config import Config
 
 
 def roles_required(roles):
@@ -25,9 +26,12 @@ def roles_required(roles):
     return wrapper
 
 
-def write_to_db(data):
+def write_to_db(data, db_action):
     try:
-        db.session.add(data)
+        if db_action is not None:
+            db_action(data)
+        else:
+            db.session.add(data)
         db.session.commit()
         return 200, "Success"
     except Exception as e:
@@ -39,16 +43,21 @@ def write_to_db(data):
 def user_form_handler(form, action):
     if action == "add":
         user = User(username=form.username.data,
-                    email=form.email.data, role_id=form.roles.data)
+                    email=form.email.data,
+                    role_id=form.roles.data)
         user.set_password(form.password.data)
+        return write_to_db(user, db.session.add)
     elif action == "delete":
-        pass
+        user = User.query.filter_by(form.id.data).first()
+        if user is None:
+            abort(404)
+        return write_to_db(user, db.session.delete)
     elif action == "update":
-        user = User(email=form.email.data, role_id=form.roles.data, active=form.active.data)
-
-        pass
-    #print(user)
-    return write_to_db(user)
+        user = User(email=form.email.data,
+                    role_id=form.roles.data,
+                    active=form.active.data)
+        return write_to_db(user, db.session.add)
+    return 500, Exception(f"Invalid action: {action}")
 
 
 def agent_form_handler(form, action):
@@ -181,10 +190,9 @@ def logout():
     return redirect(url_for('login'))
 
 
-
 @app.route('/add/<form_type>', methods=['GET', 'POST'])
 @login_required
-@roles_required([constants.SUPER_USER_STR, constants.ADMINISTRATOR_STR])
+@roles_required([Config.SUPER_USER_STR, Config.ADMINISTRATOR_STR])
 def register(form_type):
     generic_data = {
         "title": f"Add {str.capitalize(form_type)}",
@@ -204,6 +212,7 @@ def register(form_type):
         status, e = handle_form(form, form_type, 'add')
         # app.logger.info("status: ", status, e)
         if status != 200:
+            app.logger.error(f"status: {status}, {e}")
             abort(status)
         flash(f"{form_type} inserted successfully")
         app.logger.info(f"{form_type} inserted successfully")
@@ -211,9 +220,23 @@ def register(form_type):
     return render_template(f"add_{form_type}.html", form=form, data=generic_data)
 
 
+@app.route('/change_password', methods=['GET', 'POST'])
+@login_required
+def change_password():
+    generic_data = {
+        "title": "Change Password",
+        "heading": "Change Password"
+    }
+    form = ChangePasswordForm()
+    if form.validate_on_submit():
+        print()
+        pass
+    return render_template(f"change_password.html", form=form, data=generic_data)
+
+
 @app.route('/admin/<action>/<form_type>', methods=['GET', 'POST'])
 @login_required
-@roles_required([constants.SUPER_USER_STR, constants.ADMINISTRATOR_STR])
+@roles_required([Config.SUPER_USER_STR, Config.ADMINISTRATOR_STR])
 def admin_actions(action, form_type):
     generic_data = {
         "title": f"{str.capitalize(action)} {str.capitalize(form_type)}",
@@ -228,6 +251,7 @@ def admin_actions(action, form_type):
         status, e = handle_form(form, form_type, action)
         # app.logger.info("status: ", status, e)
         if status != 200:
+            app.logger.error(f"status: {status}, {e}")
             abort(status)
         flash(f"{form_type} {action}ed successfully")
         app.logger.info(f"{form_type} {action}ed successfully")

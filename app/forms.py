@@ -44,27 +44,27 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 
-class UpdatePasswordForm(FlaskForm):
-    prev_password = PasswordField('Password', validators=[
+class ChangePasswordForm(FlaskForm):
+    prev_password = PasswordField('Old Password', validators=[
         DataRequired(message="Password is required"),
         InputRequired(message="Password is required")
     ])
-    new_password = PasswordField('Password', validators=[
+    new_password = PasswordField('New Password', validators=[
         DataRequired(message="Password is required"),
         InputRequired(message="Password is required")
     ])
-    repeat_password = PasswordField('Password', validators=[
+    repeat_password = PasswordField('Repeat Password', validators=[
         DataRequired(message="Password is required"),
-        InputRequired(message="Password is required")
+        EqualTo('new_password')
     ])
-    submit = SubmitField('Sign In')
+    submit = SubmitField('Update')
 
     @staticmethod
-    def validate_prev_password(self):
+    def validate_prev_password(self, prev_password):
         if current_user.is_anonymous:
-            raise ValidationError('Invalid user')
-        if current_user.check_pasword(self.prev_password):
-            raise ValidationError("Incorrect password")
+            raise ValidationError("Invalid User")
+        if not current_user.check_password(prev_password.data):
+            raise ValidationError("Incorrect Password")
 
 
 class RegistrationForm(FlaskForm):
@@ -124,15 +124,17 @@ class AgentForm(FlaskForm):
     )
     submit = SubmitField('Add Agent')
 
-    def validate(self):
+    @staticmethod
+    def validate_name(self, name):
         agent_model = PurchaseAgent if self.agent_type.data == '1' else SaleAgent
-        app.logger.info(str(self.agent_type.data) + str(self.name.data))
-        user = agent_model().query.filter_by(name=self.name.data, mobile=self.mobile.data).first()
+        app.logger.info(str(self.agent_type.data) + str(name.data))
+        user = agent_model().query.filter_by(name=name.data, mobile=self.mobile.data).first()
         if user is not None:
             app.logger.info(user)
             raise ValidationError('Please use a different agent name and mobile number')
         return True
 
+    @staticmethod
     def validate_mobile(self, mobile):
         if not validate_number(mobile.data):
             raise ValidationError('Invalid mobile number')
@@ -145,6 +147,7 @@ class VarietyForm(FlaskForm):
     )
     submit = SubmitField('Add Variety')
 
+    @staticmethod
     def validate_name(self, name):
         variety = Variety.query.filter_by(name=name.data).first()
         if variety is not None:

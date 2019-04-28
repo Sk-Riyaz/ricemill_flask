@@ -6,7 +6,7 @@ from flask_login import UserMixin
 #from flask_user import UserMixin
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
-from app import constants
+from config import Config
 
 
 @login.user_loader
@@ -49,7 +49,7 @@ class User(UserMixin, BaseModel):
         return self.role.name
 
     def is_admin(self):
-        return self.get_role() in [constants.SUPER_USER_STR, constants.ADMINISTRATOR_STR]
+        return self.get_role() in [Config.SUPER_USER_STR, Config.ADMINISTRATOR_STR]
 
     def __repr__(self):
         return f'<User Id: {self.id} Name: {self.username} Role: {self.get_role()}>'

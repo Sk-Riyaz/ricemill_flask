@@ -40,6 +40,10 @@
                     <button type="submit" name="salesGet" class="btn btn-primary"> Sales </button>
                 </a>
 
+                <a href="{{ url_for('change_password') }}">
+                    <button type="submit" name="changePassGet" class="btn btn-primary"> Change Password </button>
+                </a>
+
                 {% if current_user.is_admin() %}
                 <a href="{{ url_for('register', form_type='user') }}">
                     <button type="submit" name="adduser" class="btn btn-primary"> Add User </button>
