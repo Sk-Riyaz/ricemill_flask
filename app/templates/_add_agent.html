@@ -1,0 +1,40 @@
+{% block head %}
+    <h1> Agent </h1>
+{% endblock %}
+
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
+    
+{% block content %}
+    <form name="register" id="register" class="needs-validation" action="{{ url_for('register', form_type='agent') }}"  method="post" novalidate>
+        {{ aform.hidden_tag() }}
+        
+        <p> {{ aform.name.label }} {{ aform.name(size=32) }} </p>
+        {% for error in aform.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ aform.email.label }} {{ aform.email }} </p>
+        {% for error in aform.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ aform.mobile.label }} {{ aform.mobile(size=15) }} </p>
+        {% for error in aform.mobile.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ aform.address.label }} {{ aform.address }} </p>
+        {% for error in aform.address.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ aform.agent_type.label }} {{ aform.agent_type }} </p>
+        {% for error in aform.agent_type.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ aform.submit() }} </p>
+    </form>
+
+     <!-- onsubmit create invoice with formula -->
+{% endblock %}

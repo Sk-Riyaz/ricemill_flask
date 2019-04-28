@@ -1,0 +1,20 @@
+{% block head %}
+    <h1> Variety </h1>
+{% endblock %}
+
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
+    
+{% block content %}
+    <form name="register" id="register" action="{{ url_for('register', form_type='variety') }}" method="post">
+        {{ vform.hidden_tag() }}
+        
+        <p> {{ vform.name.label }} {{ vform.name(size=32) }} </p>
+        {% for error in vform.name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ vform.submit() }} </p>
+    </form>
+
+     <!-- onsubmit create invoice with formula -->
+{% endblock %}

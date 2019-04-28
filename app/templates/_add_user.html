@@ -1,0 +1,36 @@
+{% block head %}
+    <h1> User </h1>
+{% endblock %}
+
+{% block content %}
+    <form name="register" id="register" method="post" action="{{ url_for('register', form_type='user') }}" onsubmit="return validate()">
+        <p> {{ uform.username.label }} {{ uform.username(size=32) }} </p>
+        {% for error in uform.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    
+        <p> {{ uform.password.label }} {{ uform.password(size=32) }} </p>
+        {% for error in uform.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ uform.password2.label }} {{ uform.password2(size=32) }} </p>
+        {% for error in uform.password2.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ uform.email.label }} {{ uform.email }} </p>
+        {% for error in uform.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ uform.roles.label }} {{ uform.roles }} </p>
+        {% for error in uform.roles.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p>{{ uform.active() }} {{ uform.active.label }}</p>
+
+        <p> {{ uform.submit() }} </p>
+    </form>
+{% endblock %}

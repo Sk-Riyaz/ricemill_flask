@@ -17,7 +17,7 @@
 <!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
     
 {% block content %}
-    <form name="register" id="register" method="post">
+    <form name="register" id="register" class="needs-validation"  method="post" novalidate>
         {{ form.hidden_tag() }}
         
         <p> {{ form.name.label }} {{ form.name(size=32) }} </p>

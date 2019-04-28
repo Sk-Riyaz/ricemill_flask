@@ -1,17 +1,13 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    {% if data.title %}
-        <title> {{ data.title }} </title>
-    {% else %}
-        <title> Sale </title>
-    {% endif %}
+{% if data.title %}
+<title> {{ data.title }} </title>
+{% else %}
+<title> Sale </title>
+{% endif %}
 
-    {% if data.heading %}
-        <h1> {{ data.heading }} </h1>
-    {% else %}
-        <h1> Purchase </h1>
-    {% endif %}
+
 {% endblock %}
 
 <!--p> Serial No </p> <input type="text" name="input1" id="input1" required/-->
@@ -25,110 +21,124 @@
 
 
 {% block content %}
-<form name="sale" id="sale" method="post">
-    {{ form.hidden_tag() }}
-    <div class="form-group row">
-        <div class="row">
-            <div class="col-md-12">
-                <label for="partyName" class="col-sm-4 col-form-label">{{ form.party_name.label }} </label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="party_name" id="party_name" placeholder="Party Name">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <label for="party_address" class="col-sm-4 col-form-label">Party Address</label>
-                <div class="col-sm-8">
-                    <textarea name="party_address" id="party_address" class="form-control" rows="3"></textarea>
-                    <!--  <input type="text" class="form-control" name="party_address" id="party_address" placeholder="Party Address"> -->
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <label for="gst_number" class="col-sm-4 col-form-label">GST Number</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="gst_number" id="gst_number" placeholder="Party Name">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <label for="vehicle_number" class="col-sm-4 col-form-label">Vehicle Number</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="vehicle_number" id="vehicle_number"
-                        placeholder="Vehicle Number">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <label for="no_of_bags" class="col-sm-4 col-form-label">No. Of Bags</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="no_of_bags" id="no_of_bags" placeholder="No. Of Bags">
-                </div>
-            </div>
-        </div>
-        <div class="row">
+<form name="sale" id="sale" class="needs-validation form" method="post" novalidate>
+    <div class="col-md-6">
+        {{ form.hidden_tag() }}
+        <div class="form-group row ">
+            {% if data.heading %}
+            <h1> {{ data.heading }} </h1>
+            {% else %}
+            <h1> Purchase </h1>
+            {% endif %}
+            <div class="row">
                 <div class="col-md-12">
-                        <label for="variety" class="col-sm-4 col-form-label">Variety</label>
-                        <!-- <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="variety" id="variety" placeholder="Variety">
-                                </div> -->
-                        <select class="form-control" id="variety">
-                            <option selected>Please Select Variety</option>
-                            <option value="1">NJR</option>
-                            <option value="2">1010</option>
-                            <option value="3">BPT</option>
-                            <option value="4">Nandyala BPT</option>
-                            <option value="5">Nandyala Non-BPT</option>
-            
-                        </select>
+                    <label for="partyName" class="col-sm-4 col-form-label">{{ form.party_name.label }} </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="party_name" id="party_name"
+                            placeholder="Party Name">
                     </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="party_address" class="col-sm-4 col-form-label">Party Address</label>
+                    <div class="col-sm-8">
+                        <textarea name="party_address" id="party_address" class="form-control" rows="3"></textarea>
+                        <!--  <input type="text" class="form-control" name="party_address" id="party_address" placeholder="Party Address"> -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="gst_number" class="col-sm-4 col-form-label">GST Number</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="gst_number" id="gst_number"
+                            placeholder="Party Name">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="vehicle_number" class="col-sm-4 col-form-label">Vehicle Number</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="vehicle_number" id="vehicle_number"
+                            placeholder="Vehicle Number">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="no_of_bags" class="col-sm-4 col-form-label">No. Of Bags</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="no_of_bags" id="no_of_bags"
+                            placeholder="No. Of Bags">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="variety" class="col-sm-4 col-form-label">Variety</label>
+                    <!-- <div class="col-sm-8">
+                                            <input type="text" class="form-control" name="variety" id="variety" placeholder="Variety">
+                                        </div> -->
+                    <select class="form-control" id="variety">
+                        <option selected>Please Select Variety</option>
+                        <option value="1">NJR</option>
+                        <option value="2">1010</option>
+                        <option value="3">BPT</option>
+                        <option value="4">Nandyala BPT</option>
+                        <option value="5">Nandyala Non-BPT</option>
+
+                    </select>
+                </div>
+
+            </div>
+
 
         </div>
+        <!-- <p> {{ form.party_name.label }}         {{ form.party_name() }} </p>
+                <p> {{ form.party_address.label }}      {{ form.party_address() }} </p>
+                <p> {{ form.gst_number.label }}         {{ form.gst_number() }} </p> 
+                <p> {{ form.vehicle_number.label }}     {{ form.vehicle_number() }} </p>
+                <p> {{ form.no_of_bags.label }}         {{ form.no_of_bags() }} </p>-->
 
-       
+        <p> {{ form.variety.label }} {{ form.variety() }} </p>
+        {% for error in form.variety.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.agent.label }} {{ form.agent() }} </p>
+        {% for error in form.agent.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+        <p> {{ form.date.label }} {{ form.date() }} </p>
+        <p> {{ form.quintol.label }} {{ form.quintol() }} </p>
+        <p> {{ form.rate.label }} {{ form.rate() }} </p>
+        <p> {{ form.amount.label }} {{ form.amount() }} </p>
+        <p> {{ form.submit() }} </p>
+
     </div>
-    <!-- <p> {{ form.party_name.label }}         {{ form.party_name() }} </p>
-        <p> {{ form.party_address.label }}      {{ form.party_address() }} </p>
-        <p> {{ form.gst_number.label }}         {{ form.gst_number() }} </p> 
-        <p> {{ form.vehicle_number.label }}     {{ form.vehicle_number() }} </p>
-        <p> {{ form.no_of_bags.label }}         {{ form.no_of_bags() }} </p>-->
 
-    <p> {{ form.variety.label }} {{ form.variety() }} </p>
-    {% for error in form.variety.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
 
-    <p> {{ form.agent.label }} {{ form.agent() }} </p>
-    {% for error in form.agent.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
 
-    <p> {{ form.date.label }} {{ form.date() }} </p>
-    <p> {{ form.quintol.label }} {{ form.quintol() }} </p>
-    <p> {{ form.rate.label }} {{ form.rate() }} </p>
-    <p> {{ form.amount.label }} {{ form.amount() }} </p>
-    <p> {{ form.submit() }} </p>
 </form>
 {% endblock %}
-        <p> {{ form.no_of_bags.label }}         {{ form.no_of_bags() }} </p>
-        
-        <p> {{ form.variety.label }}            {{ form.variety() }} </p>
-        {% for error in form.variety.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+<p> {{ form.no_of_bags.label }} {{ form.no_of_bags() }} </p>
 
-        <p> {{ form.agent.label }}              {{ form.agent() }} </p>
-        {% for error in form.agent.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+<p> {{ form.variety.label }} {{ form.variety() }} </p>
+{% for error in form.variety.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
 
-        <p> {{ form.date.label }}               {{ form.date() }} </p>
-        <p> {{ form.quintol.label }}            {{ form.quintol() }} </p>
-        <p> {{ form.rate.label }}               {{ form.rate() }} </p>
-        <p> {{ form.amount.label }}             {{ form.amount(disabled=disabled) }} </p>
-        <p> {{ form.submit() }} </p>
-    </form>
+<p> {{ form.agent.label }} {{ form.agent() }} </p>
+{% for error in form.agent.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+
+<p> {{ form.date.label }} {{ form.date() }} </p>
+<p> {{ form.quintol.label }} {{ form.quintol() }} </p>
+<p> {{ form.rate.label }} {{ form.rate() }} </p>
+<p> {{ form.amount.label }} {{ form.amount(disabled=disabled) }} </p>
+<p> {{ form.submit() }} </p>
+</form>

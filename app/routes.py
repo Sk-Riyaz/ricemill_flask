@@ -311,3 +311,22 @@ def sales():
 
     return render_template("sales.html", data=generic_data, form=form)
 
+@app.route('/manage', methods=['GET', 'POST'])
+def manage():
+    generic_data = {
+        "title": "Sales",
+        "heading": "Sales"
+        }
+    """
+    form = SalesForm()
+    form.agent.choices = utilities.get_agent_choices(type=SaleAgent)
+    form.variety.choices = utilities.get_variety_choices()
+    if form.validate_on_submit():
+        status, e = sale_form_handler(form)
+        if status != 200:
+            abort(status)
+        app.logger.info("Sale inserted Successfully")
+        flash("Sale inserted Successfully")
+        return redirect('sales')
+    """
+    return render_template("manage.html", data=generic_data, uform=RegistrationForm(), aform=AgentForm(), vform=VarietyForm())
