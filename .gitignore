@@ -4,4 +4,6 @@ __pycache__/
 *.idea
 logs*
 .vscode
-.DSC_Store
+.DS_Store
+migrations/
+*.db
