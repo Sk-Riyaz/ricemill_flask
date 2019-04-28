@@ -1,17 +1,26 @@
 {% extends 'base.html' %}
 
 {% block head %}
-{% if data.title %}
-<title> {{ data.title }} </title>
-{% else %}
-<title> Purchase </title>
-{% endif %}
+    {% if data.title %}
+        <title> {{ data.title }} </title>
+    {% else %}
+        <title> Purchase </title>
+    {% endif %}
 
-{% if data.heading %}
-<h1> {{ data.heading }} </h1>
-{% else %}
-<h1> Purchase </h1>
-{% endif %}
+    {% if data.heading %}
+        <h1> {{ data.heading }} </h1>
+    {% else %}
+        <h1> Purchase </h1>
+    {% endif %}
+    <script>
+        window.onload = function() {
+            alert("hello");
+            document.getElementById('purchase').onsubmit = function() {
+                var txt = document.getElementById('amount');
+                txt.value = 100;
+            };
+        };​
+    </script>
 {% endblock %}
 
 <!--p> Serial No </p> <input type="text" name="input1" id="input1" required/-->
@@ -128,7 +137,7 @@
                 {{ form.date.label(class_="col-sm-4 col-form-label") }}
 
                 <div class="col-sm-8">
-                    {{ form.date(class_="form-control", placeholder="Date") }}
+                    {{ form.date(class_="form-control", placeholder="dd-mm-yyyy") }}
                 </div>
             </div>
         </div>
@@ -139,7 +148,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                {{ form.amount.label(class_="col-sm-4 col-form-label") }}
+                {{ form.amount.label(class_="col-sm-4 col-form-label", disabled=disabled) }}
 
                 <div class="col-sm-8">
                     {{ form.amount(class_="form-control", placeholder="Amount") }}
@@ -153,3 +162,4 @@
     <p> {{ form.submit(class_="form-btn") }} </p>
 </form>
 {% endblock %}
+     <!-- onsubmit create invoice with formula -->
