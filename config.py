@@ -11,3 +11,4 @@ class Config(object):
 
     SUPER_USER_STR = "SUPER_USER"
     ADMINISTRATOR_STR = "ADMINISTRATOR"
+    USER_STR = "USER_STR"

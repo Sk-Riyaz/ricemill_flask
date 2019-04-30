@@ -1,15 +1,10 @@
 from flask import render_template, request, redirect, url_for, flash, abort
-from flask_login import current_user, login_user, logout_user, login_required
-#from flask_user import roles_required
-from werkzeug.urls import url_parse
-
-from functools import wraps
+from flask_login import current_user, login_required
 
 from app.core import bp
-from app import db#, logger
-#from app.auth import LoginForm, RegistrationForm, ChangePasswordForm, AgentForm, PurchaseForm, SalesForm, VarietyForm
-from app.core.forms import PurchaseForm, SalesForm
-from app.models import User, PurchaseAgent, SaleAgent, Variety, Roles, Purchase, Sale
+from app import db  #, logger
+from app.core.forms import PurchaseForm, SalesForm, PurchaseReportForm, SalesReportForm, PurchaseReportFields
+from app.models import PurchaseAgent, SaleAgent, Purchase, Sale
 from app import utilities
 from app.utilities import write_to_db
 from config import Config
@@ -79,7 +74,17 @@ def purchase():
         #logger.info("Purchase inserted Successfully")
         return redirect(url_for('core.purchase'))
 
-    return render_template("core/purchase.html", data=generic_data, form=form)
+    #purchases = Purchase.query.all()
+    purchases_report = []
+    for _purchase in Purchase.query.all():  # .order_by(Purchase.date):
+        form_data = {}
+        form_data.update({'id': _purchase.id})
+        form_data.update({'agent': _purchase.agent.name})
+        form_data.update({'date': _purchase.timestamp})
+        purchases_report.append(form_data)
+        print("purchase: ", purchase)
+
+    return render_template("core/purchase.html", data=generic_data, form=form, purchases=purchases_report)
 
 
 @bp.route('/sales', methods=['GET', 'POST'])
@@ -102,3 +107,23 @@ def sales():
         return redirect(url_for('core.sales'))
 
     return render_template("core/sales.html", data=generic_data, form=form)
+
+
+@bp.route('/report/<form_type>', methods=['GET', 'POST'])
+@utilities.roles_required([Config.ADMINISTRATOR_STR, Config.USER_STR])
+def report(form_type):
+    generic_data = {
+        "title": "Report",
+        "heading": "Report"
+    }
+
+    purchases_report = []
+    purchases = Purchase.query.all()
+    for _purchase in purchases:
+        form_data = {}
+        form_data.update({'id': _purchase.id})
+        form_data.update({'agent': _purchase.agent.name})
+        form_data.update({'date': _purchase.timestamp})
+        purchases_report.append(form_data)
+        print("purchase: ", purchase)
+    return render_template("core/report.html", data=generic_data, purchases=purchases_report)

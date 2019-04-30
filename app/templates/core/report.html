@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {% if data.title %}
+        <title> {{ data.title }} </title>
+    {% else %}
+        <title> Purchase </title>
+    {% endif %}
+
+    {% if data.heading %}
+        <h1> {{ data.heading }} </h1>
+    {% else %}
+        <h1> Purchase </h1>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% include 'core/purchase_report.html' %}
+{% endblock %}
