@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 
 from app.core import bp
 from app import db  #, logger
-from app.core.forms import PurchaseForm, SalesForm, PurchaseReportForm, SalesReportForm, PurchaseReportFields
+from app.core.forms import PurchaseForm, SalesForm #, PurchaseReportForm, SalesReportForm, PurchaseReportFields
 from app.models import PurchaseAgent, SaleAgent, Purchase, Sale
 from app import utilities
 from app.utilities import write_to_db
