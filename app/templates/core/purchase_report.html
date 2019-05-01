@@ -1,0 +1,14 @@
+<div>
+    <table border="1">
+        <tr>
+            <th> Date </th>
+            <th> Agent Name </th>
+        </tr>
+        {% for purchase in purchases %}
+        <tr>
+            <td><a href="/report/purchase?id={{purchase.id}}">{{ purchase.date }}</a></td>
+            <td>{{ purchase.agent }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

@@ -1,21 +1,25 @@
 {% extends 'base.html' %}
+
 {% block head %}
-{% if data.title %}
-    <title> {{ data.title }} </title>
-{% else %}
-    <title> Purchase </title>
-{% endif %}
-<script>
-    window.onload = function () {
-        alert("hello");
-        document.getElementById('purchase').onsubmit = function () {
-            var txt = document.getElementById('amount');
-            txt.value = 100;
-        };
-    };​
-</script>
+    {% if data.title %}
+        <title> {{ data.title }} </title>
+    {% else %}
+        <title> Purchase </title>
+    {% endif %}
+
+    <script>
+        window.onload = function() {
+            alert("hello");
+            document.getElementById('purchase').onsubmit = function() {
+                var txt = document.getElementById('amount');
+                txt.value = 100;
+            };
+        };​
+    </script>
 {% endblock %}
-<!-- Auto generated from backend -->
+
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
+    
 {% block content %}
 <form name="purchase" class="needs-validation form" novalidate id="purchase" method="post">
     <div class="col-md-6">
@@ -136,4 +140,3 @@
     <p> {{ form.submit(class_="form-btn") }} </p>
 </form>
 {% endblock %}
-<!-- onsubmit create invoice with formula -->

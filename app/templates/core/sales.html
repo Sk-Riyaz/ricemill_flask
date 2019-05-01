@@ -1,17 +1,14 @@
 {% extends 'base.html' %}
 
 {% block head %}
-{% if data.title %}
-<title> {{ data.title }} </title>
-{% else %}
-<title> Sale </title>
-{% endif %}
-
-
+    {% if data.title %}
+        <title> {{ data.title }} </title>
+    {% else %}
+        <title> Sale </title>
+    {% endif %}
 {% endblock %}
 
-<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/-->
-<!-- Auto generated from backend -->
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
 
 <input type="checkbox" name="Boiled" value="1"> Boiled <br>
 <input type="checkbox" name="HalfBoiled" value="1"> Half Boiled <br>
