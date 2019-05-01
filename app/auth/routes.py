@@ -10,7 +10,6 @@ from app.models import User
 from app.utilities import write_to_db
 
 
-@bp.route('/', methods=['GET', 'POST'])
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:

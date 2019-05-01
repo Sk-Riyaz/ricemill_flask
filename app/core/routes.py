@@ -41,6 +41,7 @@ def sale_form_handler(form):
     return write_to_db(sale_data)
 
 
+@bp.route('/', methods=['GET'])
 @bp.route('/home', methods=['GET'])
 @login_required
 def home():
