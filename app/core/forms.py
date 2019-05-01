@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import (IntegerField, FloatField, StringField,
-                     SubmitField, DateField, SelectField, TextAreaField)
+                     SubmitField, DateField, SelectField, TextAreaField,
+                     FormField, FieldList)
 from wtforms.validators import DataRequired, InputRequired, ValidationError
 
 from app import utilities
@@ -95,3 +96,45 @@ class SalesForm(FlaskForm):
         InputRequired(message="Amount is required")
     ])
     submit = SubmitField('Submit')
+
+
+"""
+class PurchaseReportFields(FlaskForm):
+    rst_number = FloatField('RST No')
+    weight = FloatField("Weight", validators=[
+        DataRequired(message="Weight is required"),
+        InputRequired(message="Weight is required")
+    ])
+    variety = SelectField("Variety", coerce=int, validators=[
+        DataRequired(message="Variety is required"),
+        InputRequired(message="Variety is required"),
+        ChoiceValidator(choice="Variety")]
+    )
+    agent = StringField("Agent", validators=[
+        DataRequired(message="Agent is required"),
+        InputRequired(message="Agent is required")]
+    )
+    moisture = FloatField("Moisture", validators=[
+        DataRequired(message="Moisture is required"),
+        InputRequired(message="Moisture is required")
+    ])
+    rate = FloatField("Rate", validators=[
+        DataRequired(message="Rate is required"),
+        InputRequired(message="Rate is required")
+    ])
+    date = DateField("Date", format="%d-%m-%Y")
+    amount = FloatField("Amount", validators=[
+        DataRequired(message="Amount is required"),
+        InputRequired(message="Amount is required")
+    ])
+    submit = SubmitField('Submit')
+
+
+class PurchaseReportForm(FlaskForm):
+    purchases = FieldList(FormField(PurchaseReportFields))
+
+
+class SalesReportForm(FlaskForm):
+    sales = FieldList(FormField(SalesForm))
+"""
+
