@@ -26,20 +26,20 @@
         {% if not current_user.is_anonymous %}
 
 
-        <ul class="nav nav-tabs justify-content-end">
+        <!--ul class="nav nav-tabs justify-content-end">
                 <li class="nav-item active">
-                  <a class="nav-link " href="{{ url_for('home') }}">Home</a>
+                  <a class="nav-link " href="{{ url_for('core.home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('sales') }}">Sales</a>
+                  <a class="nav-link" href="{{ url_for('core.sales') }}">Sales</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('purchase') }}">Purchase</a>
+                  <a class="nav-link" href="{{ url_for('core.purchase') }}">Purchase</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link disabled" href="{{ url_for('logout') }}">Logout</a>
+                  <a class="nav-link disabled" href="{{ url_for('auth.logout') }}">Logout</a>
                 </li>
-              </ul>
+        </ul-->
         
      
         {% endif %}
@@ -49,7 +49,7 @@
 
 
 
-<!--         <div class="btn-group">
+         <ul class="nav nav-tabs justify-content-end">
             {% if not current_user.is_anonymous %}
                 <a href="{{ url_for('core.home') }}">
                     <button type="submit" name="homeGet" class="btn btn-primary"> Home </button>
@@ -87,7 +87,7 @@
                     <button type="submit" name="logout" class="btn btn-primary"> Logout </button>
                 </a>
             {% endif %}
-        </div> -->
+        </ul>
 
         {% block head %} {% endblock %}
     </head>

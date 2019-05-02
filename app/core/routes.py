@@ -77,7 +77,7 @@ def purchase():
 
     #purchases = Purchase.query.all()
     purchases_report = []
-    for _purchase in Purchase.query.all():  # .order_by(Purchase.date):
+    for _purchase in Purchase.query.order_by(Purchase.timestamp.desc()).all():  # .order_by(Purchase.date):
         form_data = {}
         form_data.update({'id': _purchase.id})
         form_data.update({'agent': _purchase.agent.name})
