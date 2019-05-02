@@ -22,7 +22,10 @@ class ChoiceValidator(object):
 
 
 class PurchaseForm(FlaskForm):
-    rst_number = FloatField('RST No')
+    rst_number = FloatField('RST Number', validators=[
+        DataRequired(message="Weight is required"),
+        InputRequired(message="Weight is required")
+    ])
     weight = FloatField("Weight", validators=[
         DataRequired(message="Weight is required"),
         InputRequired(message="Weight is required")
@@ -54,11 +57,11 @@ class PurchaseForm(FlaskForm):
 
 
 class SalesForm(FlaskForm):
-    party_name = StringField("PartyName", validators=[
+    party_name = StringField("Party Name", validators=[
         DataRequired(message="PartyName is required"),
         InputRequired(message="PartyName is required")]
     )
-    party_address = TextAreaField("PartyAddress", validators=[
+    party_address = TextAreaField("Party Address", validators=[
         DataRequired(message="PartyAddress is required"),
         InputRequired(message="PartyAddress is required")
     ])

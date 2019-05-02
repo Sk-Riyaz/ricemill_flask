@@ -7,29 +7,22 @@
             {{ form.hidden_tag() }}
             <div class="input-group">
                 {{ form.username(size=32)}}
-                <!-- <input type="text" name="username" required="required"> -->
-                <span>Username</span>
+                <span>{{ form.username.label }}</span>
             </div>
           
             <div class="input-group">
-                <!-- <input type="password" name="password" required="required"> -->
                 {{ form.password(size=32)}}
-                <span>Password</span>
+                <span>{{ form.password.label }}</span>
             </div>
            
             <div class="input-group">
-                <!-- <input type="submit" value="Login"> -->
                 {{ form.submit() }}
             </div>
+    
+            <label style="display: flex; align-items: center;">
+                {{ form.remember_me() }} {{ form.remember_me.label }}
+            </label>
         </form>
-        <label style="display: flex; align-items: center;">
-            {{ form.remember_me() }} {{ form.remember_me.label }}
-        </label>
-
-
-
-        <!--  {{ form.remember_me() }} {{ form.remember_me.label }} -->
-
     </div>
 </div>
 {% endblock %}

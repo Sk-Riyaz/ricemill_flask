@@ -18,124 +18,126 @@
 
 
 {% block content %}
-<form name="sale" id="sale" class="needs-validation form" method="post" novalidate>
+<form name="sale" id="sale" method="post" class="needs-validation form" novalidate>
+    {{ form.hidden_tag() }}
     <div class="col-md-6">
-        {{ form.hidden_tag() }}
         <div class="form-group row ">
             {% if data.heading %}
-            <h1> {{ data.heading }} </h1>
+                <h1> {{ data.heading }} </h1>
             {% else %}
-            <h1> Purchase </h1>
+                <h1> Sale </h1>
             {% endif %}
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="partyName" class="col-sm-4 col-form-label">{{ form.party_name.label }} </label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" name="party_name" id="party_name"
-                            placeholder="Party Name">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="party_address" class="col-sm-4 col-form-label">Party Address</label>
-                    <div class="col-sm-8">
-                        <textarea name="party_address" id="party_address" class="form-control" rows="3"></textarea>
-                        <!--  <input type="text" class="form-control" name="party_address" id="party_address" placeholder="Party Address"> -->
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="gst_number" class="col-sm-4 col-form-label">GST Number</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" name="gst_number" id="gst_number"
-                            placeholder="Party Name">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="vehicle_number" class="col-sm-4 col-form-label">Vehicle Number</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" name="vehicle_number" id="vehicle_number"
-                            placeholder="Vehicle Number">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="no_of_bags" class="col-sm-4 col-form-label">No. Of Bags</label>
-                    <div class="col-sm-8">
-                        <input type="text" class="form-control" name="no_of_bags" id="no_of_bags"
-                            placeholder="No. Of Bags">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <label for="variety" class="col-sm-4 col-form-label">Variety</label>
-                    <!-- <div class="col-sm-8">
-                                            <input type="text" class="form-control" name="variety" id="variety" placeholder="Variety">
-                                        </div> -->
-                    <select class="form-control" id="variety">
-                        <option selected>Please Select Variety</option>
-                        <option value="1">NJR</option>
-                        <option value="2">1010</option>
-                        <option value="3">BPT</option>
-                        <option value="4">Nandyala BPT</option>
-                        <option value="5">Nandyala Non-BPT</option>
 
-                    </select>
-                </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.party_name.label(class_="col-sm-4 col-form-label") }}
 
+                    <div class="col-sm-8">
+                        {{ form.party_name(class_="form-control", placeholder="Party Name" ,required="true") }}
+                    </div>
+                </div>
             </div>
 
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.party_address.label(class_="col-sm-4 col-form-label") }}
 
+                    <div class="col-sm-8">
+                        {{ form.party_address(class_="form-control", placeholder="Pary Address", required="true") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.gst_number.label(class_="col-sm-4 col-form-label") }}
+
+                    <div class="col-sm-8">
+                        {{ form.gst_number(class_="form-control", placeholder="GST Number", required="true") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.vehicle_number.label(class_="col-sm-4 col-form-label") }}
+
+                    <div class="col-sm-8">
+                        {{ form.vehicle_number(class_="form-control", placeholder="Vehicle Number", required="true") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.no_of_bags.label(class_="col-sm-4 col-form-label") }}
+
+                    <div class="col-sm-8">
+                        {{ form.no_of_bags(class_="form-control", placeholder="Number of Bags", required="true") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.variety.label(class_="col-sm-4 col-form-label") }}
+
+                    <div class="col-sm-8">
+                        {{ form.variety(class_="form-control") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.agent.label(class_="col-sm-4 col-form-label") }}
+
+                    <div class="col-sm-8">
+                        {{ form.agent(class_="form-control") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.date.label(class_="col-sm-4 col-form-label") }}
+                    <div class="col-sm-8" data-provide="datepicker">
+                        {{ form.date(class_="form-control datepicker", placeholder="dd-mm-yyyy") }}
+                    </div>
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.quintol.label(class_="col-sm-4 col-form-label") }}
+                    <div class="col-sm-8">
+                        {{ form.quintol(class_="form-control", placeholder="Quintol", required="true") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.rate.label(class_="col-sm-4 col-form-label") }}
+                    <div class="col-sm-8">
+                        {{ form.rate(class_="form-control", placeholder="Rate", required="true") }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.amount.label(class_="col-sm-4 col-form-label", disabled=disabled) }}
+                    <div class="col-sm-8">
+                        {{ form.amount(class_="form-control", placeholder="Amount") }}
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- <p> {{ form.party_name.label }}         {{ form.party_name() }} </p>
-                <p> {{ form.party_address.label }}      {{ form.party_address() }} </p>
-                <p> {{ form.gst_number.label }}         {{ form.gst_number() }} </p> 
-                <p> {{ form.vehicle_number.label }}     {{ form.vehicle_number() }} </p>
-                <p> {{ form.no_of_bags.label }}         {{ form.no_of_bags() }} </p>-->
-
-        <p> {{ form.variety.label }} {{ form.variety() }} </p>
-        {% for error in form.variety.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        <p> {{ form.agent.label }} {{ form.agent() }} </p>
-        {% for error in form.agent.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        <p> {{ form.date.label }} {{ form.date() }} </p>
-        <p> {{ form.quintol.label }} {{ form.quintol() }} </p>
-        <p> {{ form.rate.label }} {{ form.rate() }} </p>
-        <p> {{ form.amount.label }} {{ form.amount() }} </p>
-        <p> {{ form.submit() }} </p>
-
+        {{ form.submit(class_="form-btn") }}
     </div>
-
-
-
 </form>
 {% endblock %}
-<p> {{ form.no_of_bags.label }} {{ form.no_of_bags() }} </p>
-
-<p> {{ form.variety.label }} {{ form.variety() }} </p>
-{% for error in form.variety.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-
-<p> {{ form.agent.label }} {{ form.agent() }} </p>
-{% for error in form.agent.errors %}
-<span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-
-<p> {{ form.date.label }} {{ form.date() }} </p>
-<p> {{ form.quintol.label }} {{ form.quintol() }} </p>
-<p> {{ form.rate.label }} {{ form.rate() }} </p>
-<p> {{ form.amount.label }} {{ form.amount(disabled=disabled) }} </p>
-<p> {{ form.submit() }} </p>
-</form>
