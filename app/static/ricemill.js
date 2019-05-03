@@ -15,3 +15,54 @@
       });
     }, false);
   })();
+
+
+(function() {
+    window.addEventListener('load', function() {
+      var varsel = document.getElementById('variety');
+
+      // create new option element
+      var opt = document.createElement('option');
+
+      // create text node to add to option element (opt)
+      opt.appendChild( document.createTextNode('Select') );
+
+      // set value property of opt
+      opt.value = '';
+
+      // add opt to end of select box (sel)
+      varsel.prepend(opt);
+      varsel.options[0].selected = true;
+
+
+      var agentsel = document.getElementById('agent');
+      var agentopt = document.createElement('option');
+
+      // create text node to add to option element (opt)
+      agentopt.appendChild( document.createTextNode('Select') );
+
+      // set value property of opt
+      agentopt.value = '';
+
+      agentsel.prepend(agentopt);
+      agentsel.options[0].selected = true;
+    });
+  }) ();
+
+function updatePurchaseAmount() {
+    var rate = document.getElementById("rate");
+
+    var amt = document.getElementById('amount');
+    amt.value = rate.value;
+    return true;
+};
+
+function updateSalesAmount() {
+    var rate = document.getElementById('rate');
+    var quintol = document.getElementById('quintol');
+    var gst = 5;
+
+    var amt = document.getElementById('amount');
+    amt.value = (quintol.value * rate.value) + (quintol.value * rate.value * gst / 100);
+    return true;
+};

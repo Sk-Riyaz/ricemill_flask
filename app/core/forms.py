@@ -1,11 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import (IntegerField, FloatField, StringField,
-                     SubmitField, DateField, SelectField, TextAreaField,
-                     FormField, FieldList)
+                     SubmitField, SelectField, TextAreaField)
+from wtforms.fields.html5 import DateField
 from wtforms.validators import DataRequired, InputRequired, ValidationError
-
-from app import utilities
-from flask_login import current_user
 
 
 class ChoiceValidator(object):
@@ -23,8 +20,8 @@ class ChoiceValidator(object):
 
 class PurchaseForm(FlaskForm):
     rst_number = FloatField('RST Number', validators=[
-        DataRequired(message="Weight is required"),
-        InputRequired(message="Weight is required")
+        DataRequired(message="RST Number is required"),
+        InputRequired(message="RST Number is required")
     ])
     weight = FloatField("Weight", validators=[
         DataRequired(message="Weight is required"),
@@ -48,7 +45,7 @@ class PurchaseForm(FlaskForm):
         DataRequired(message="Rate is required"),
         InputRequired(message="Rate is required")
     ])
-    date = DateField("Date", format="%d-%m-%Y")
+    date = DateField("Date")#, format="%M/%d/%Y")
     amount = FloatField("Amount", validators=[
         DataRequired(message="Amount is required"),
         InputRequired(message="Amount is required")
@@ -93,11 +90,8 @@ class SalesForm(FlaskForm):
         DataRequired(message="Rate is required"),
         InputRequired(message="Rate is required")
     ])
-    date = DateField("Date", format="%d-%m-%Y")
-    amount = FloatField("Amount", validators=[
-        DataRequired(message="Amount is required"),
-        InputRequired(message="Amount is required")
-    ])
+    date = DateField("Date")#, format="%d-%m-%Y")
+    amount = FloatField("Amount")
     submit = SubmitField('Submit')
 
 

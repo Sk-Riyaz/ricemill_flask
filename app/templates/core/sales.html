@@ -13,12 +13,8 @@
 <input type="checkbox" name="Boiled" value="1"> Boiled <br>
 <input type="checkbox" name="HalfBoiled" value="1"> Half Boiled <br>
 
-<p> Amount </p>
-<p>(Quintol * Rate) + (Quintol * Rate*GST/100)</p>
-
-
 {% block content %}
-<form name="sale" id="sale" method="post" class="needs-validation form" novalidate>
+<form name="sale" id="sale" method="post" class="needs-validation form" onsubmit=updateSalesAmount()>
     {{ form.hidden_tag() }}
     <div class="col-md-6">
         <div class="form-group row ">
@@ -34,6 +30,10 @@
 
                     <div class="col-sm-8">
                         {{ form.party_name(class_="form-control", placeholder="Party Name" ,required="true") }}
+
+                        {% for error in form.party_name.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -44,6 +44,10 @@
 
                     <div class="col-sm-8">
                         {{ form.party_address(class_="form-control", placeholder="Pary Address", required="true") }}
+
+                        {% for error in form.party_address.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -54,6 +58,10 @@
 
                     <div class="col-sm-8">
                         {{ form.gst_number(class_="form-control", placeholder="GST Number", required="true") }}
+
+                        {% for error in form.gst_number.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -64,6 +72,10 @@
 
                     <div class="col-sm-8">
                         {{ form.vehicle_number(class_="form-control", placeholder="Vehicle Number", required="true") }}
+
+                        {% for error in form.vehicle_number.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -74,6 +86,10 @@
 
                     <div class="col-sm-8">
                         {{ form.no_of_bags(class_="form-control", placeholder="Number of Bags", required="true") }}
+
+                        {% for error in form.no_of_bags.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -84,6 +100,10 @@
 
                     <div class="col-sm-8">
                         {{ form.variety(class_="form-control") }}
+
+                        {% for error in form.variety.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -94,6 +114,10 @@
 
                     <div class="col-sm-8">
                         {{ form.agent(class_="form-control") }}
+
+                        {% for error in form.agent.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -102,11 +126,15 @@
                 <div class="col-md-12">
                     {{ form.date.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8" data-provide="datepicker">
-                        {{ form.date(class_="form-control datepicker", placeholder="dd-mm-yyyy") }}
+                        {{ form.date(class_="form-control datepicker", placeholder="DD-MM-YYYY", type="date") }}
+
+                        {% for error in form.date.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
-                    <div class="input-group-addon">
+                    <!--div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
-                    </div>
+                    </div-->
                 </div>
             </div>
 
@@ -115,6 +143,10 @@
                     {{ form.quintol.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8">
                         {{ form.quintol(class_="form-control", placeholder="Quintol", required="true") }}
+
+                        {% for error in form.quintol.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -124,20 +156,33 @@
                     {{ form.rate.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8">
                         {{ form.rate(class_="form-control", placeholder="Rate", required="true") }}
+
+                        {% for error in form.rate.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-12">
-                    {{ form.amount.label(class_="col-sm-4 col-form-label", disabled=disabled) }}
+                    {{ form.amount.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8">
                         {{ form.amount(class_="form-control", placeholder="Amount") }}
+
+                        {% for error in form.amount.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
+
+            <div class="col-sm-offset-4 col-sm-8">
+                {{ form.submit(class_="btn btn-default") }}
+            </div>
         </div>
-        {{ form.submit(class_="form-btn") }}
     </div>
 </form>
+
+{% include 'core/sales_report.html' %}
 {% endblock %}

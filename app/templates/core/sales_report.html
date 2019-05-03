@@ -1,0 +1,15 @@
+<div class="col-md-6">
+    <h1> Sales Report </h1>
+    <table border="1" id="report">
+        <tr>
+            <th> Date </th>
+            <th> Agent Name </th>
+        </tr>
+        {% for sale in sales %}
+        <tr>
+            <td><a href="/report/sale?id={{sale.id}}">{{ sale.date }}</a></td>
+            <td>{{ sale.agent }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>

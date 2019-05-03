@@ -25,6 +25,10 @@ def purchase_form_handler(form):
 
 
 def sale_form_handler(form):
+    quintol = form.quintol.data
+    rate = form.rate.data
+    gst = 5
+    amt = (quintol * rate) + (quintol * rate * gst / 100)
     sale_data = Sale(
         party_name=form.party_name.data,
         party_address=form.party_address.data,
@@ -36,7 +40,7 @@ def sale_form_handler(form):
         quintol=form.quintol.data,
         rate=form.rate.data,
         timestamp=form.date.data,
-        amount=form.amount.data
+        amount=amt
     )
     return write_to_db(sale_data)
 
@@ -53,7 +57,25 @@ def home():
     message = request.args.get('message')
     if message is not None:
         flash(message)
-    return render_template("core/home.html", data=generic_data)
+
+    purchases_report = []
+    for _purchase in Purchase.query.order_by(Purchase.created_on.desc()).all():
+        form_data = {}
+        form_data.update({'id': _purchase.id})
+        form_data.update({'agent': _purchase.agent.name})
+        form_data.update({'date': _purchase.created_on})
+        purchases_report.append(form_data)
+        #print("purchase: ", purchase)
+
+    sales_report = []
+    for _sale in Sale.query.order_by(Sale.created_on.desc()).all():
+        form_data = {}
+        form_data.update({'id': _sale.id})
+        form_data.update({'agent': _sale.agent.name})
+        form_data.update({'date': _sale.created_on})
+        sales_report.append(form_data)
+
+    return render_template("core/home.html", data=generic_data, purchases=purchases_report, sales=sales_report)
 
 
 @bp.route('/purchase', methods=['GET', 'POST'])
@@ -77,13 +99,14 @@ def purchase():
 
     #purchases = Purchase.query.all()
     purchases_report = []
-    for _purchase in Purchase.query.order_by(Purchase.timestamp.desc()).all():  # .order_by(Purchase.date):
+    for _purchase in Purchase.query.order_by(Purchase.created_on.desc()).all():
         form_data = {}
         form_data.update({'id': _purchase.id})
         form_data.update({'agent': _purchase.agent.name})
-        form_data.update({'date': _purchase.timestamp})
+        form_data.update({'date': _purchase.created_on})
+        form_data.update({'rstnumber': _purchase.rstnumber})
         purchases_report.append(form_data)
-        print("purchase: ", purchase)
+        #print("purchase: ", purchase)
 
     return render_template("core/purchase.html", data=generic_data, form=form, purchases=purchases_report)
 
@@ -107,7 +130,16 @@ def sales():
         flash("Sale inserted Successfully")
         return redirect(url_for('core.sales'))
 
-    return render_template("core/sales.html", data=generic_data, form=form)
+    sales_report = []
+    for _sale in Sale.query.order_by(Sale.created_on.desc()).all():
+        form_data = {}
+        form_data.update({'id': _sale.id})
+        form_data.update({'agent': _sale.agent.name})
+        form_data.update({'date': _sale.created_on})
+        sales_report.append(form_data)
+        #print("sales: ", _sale)
+
+    return render_template("core/sales.html", data=generic_data, form=form, sales=sales_report)
 
 
 @bp.route('/report/<form_type>', methods=['GET', 'POST'])

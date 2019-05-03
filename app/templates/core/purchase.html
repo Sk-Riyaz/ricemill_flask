@@ -6,22 +6,10 @@
     {% else %}
         <title> Purchase </title>
     {% endif %}
-
-    <script>
-        window.onload = function() {
-            alert("hello");
-            document.getElementById('purchase').onsubmit = function() {
-                var txt = document.getElementById('amount');
-                txt.value = 100;
-            };
-        };​
-    </script>
 {% endblock %}
-
-<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
     
 {% block content %}
-<form name="purchase" id="purchase" method="post" class="needs-validation form" novalidate>
+<form name="purchase" id="purchase" method="post" class="needs-validation form" novalidate onsubmit=updatePurchaseAmount()>
     {{ form.hidden_tag() }}
     <div class="col-md-6">
         <div class="form-group row">
@@ -36,6 +24,10 @@
                     {{ form.rst_number.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8">
                         {{ form.rst_number(class_="form-control", placeholder="RST Number" ,required="true") }}
+
+                        {% for error in form.rst_number.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -45,6 +37,10 @@
                     {{ form.weight.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8">
                         {{ form.weight(class_="form-control", placeholder="Weight") }}
+
+                        {% for error in form.weight.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -55,6 +51,10 @@
 
                     <div class="col-sm-8">
                         {{ form.variety(class_="form-control") }}
+
+                        {% for error in form.variety.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -65,6 +65,10 @@
 
                     <div class="col-sm-8">
                         {{ form.agent(class_="form-control") }}
+
+                        {% for error in form.agent.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -74,6 +78,10 @@
                     {{ form.moisture.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8">
                         {{ form.moisture(class_="form-control", placeholder="Moisture") }}
+
+                        {% for error in form.moisture.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -83,6 +91,10 @@
                     {{ form.rate.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8">
                         {{ form.rate(class_="form-control", placeholder="Rate") }}
+
+                        {% for error in form.rate.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -91,11 +103,16 @@
                 <div class="col-md-12">
                     {{ form.date.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8" data-provide="datepicker">
-                        {{ form.date(class_="form-control datepicker", placeholder="dd-mm-yyyy") }}
+                        {{ form.date(class_="form-control datepicker", placeholder="DD-MM-YYYY", type="date") }}
+
+                        {% for error in form.date.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
-                    <div class="input-group-addon">
+                    <!--div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
-                    </div>
+                    </div-->
+
                 </div>
             </div>
 
@@ -104,13 +121,22 @@
                     {{ form.amount.label(class_="col-sm-4 col-form-label", disabled=disabled) }}
                     <div class="col-sm-8">
                         {{ form.amount(class_="form-control", placeholder="Amount") }}
+
+                        {% for error in form.amount.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
                     </div>
                 </div>
+
+            </div>
+            <div class="col-sm-offset-4 col-sm-8">
+                {{ form.submit(class_="btn btn-default") }}
             </div>
         </div>
-        {{ form.submit(class_="form-btn") }}
     </div>
 </form>
 
+
 {% include 'core/purchase_report.html' %}
+
 {% endblock %}

@@ -53,13 +53,13 @@ def get_select_choice(func):
     return fn
 
 
-@get_select_choice
+#@get_select_choice
 def get_variety_choices(**kwargs):
     return [(v.id, v.name) for v in db.session.query(Variety).all()]
     return []
 
 
-@get_select_choice
+#@get_select_choice
 def get_agent_choices(**kwargs):
     return [(agent.id, agent.name) for agent in kwargs.get("type")().query.all()]
     return []
