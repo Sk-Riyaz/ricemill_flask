@@ -160,3 +160,58 @@ def report(form_type):
         purchases_report.append(form_data)
         print("purchase: ", purchase)
     return render_template("core/report.html", data=generic_data, purchases=purchases_report)
+
+
+def populate_data(form_type, model_data):
+    if form_type == 'purchase':
+        return {
+            'id': model_data.id,
+            'rstnumber': model_data.rstnumber,
+            'weight': model_data.weight,
+            'moisture': model_data.moisture,
+            'rate': model_data.rate,
+            'variety': model_data.variety.name,
+            'agent': model_data.agent.name,
+            'timestamp': model_data.timestamp,
+            'amount': model_data.amount
+        }
+    elif form_type == 'sale':
+        print("Riyaz   ", model_data.party_name)
+        return {
+            'id': model_data.id,
+            'party_name': model_data.party_name,
+            'party_address': model_data.party_address,
+            'gst_number': model_data.gst_number,
+            'vehicle_number': model_data.vehicle_number,
+            'no_of_bags': model_data.no_of_bags,
+            'variety': model_data.variety.name,
+            'agent': model_data.agent.name,
+            'timestamp': model_data.timestamp,
+            'quintol': model_data.quintol,
+            'rate': model_data.rate,
+            'amount': model_data.amount
+        }
+
+
+@bp.route('/report/<form_type>/detail', methods=['GET'])
+def form_detail(form_type):
+    generic_data = {
+        "title": f"{form_type.capitalize()} Report",
+        "heading": f"{form_type.capitalize()} Report"
+    }
+
+    id = request.args.get('id')
+    print(form_type, id)
+    model = {
+        'purchase': Purchase,
+        'sale': Sale
+    }
+
+    model_type = model.get(form_type)
+    if model_type is None:
+        abort(404)
+
+    model_data = model_type.query.filter_by(id=id).first_or_404()
+    form_data = populate_data(form_type, model_data)
+    return render_template(f"core/{form_type}_detail.html", data=generic_data, form_data=form_data)
+

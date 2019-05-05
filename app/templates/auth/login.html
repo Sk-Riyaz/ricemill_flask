@@ -8,11 +8,19 @@
             <div class="input-group">
                 {{ form.username(size=32)}}
                 <span>{{ form.username.label }}</span>
+
+                {% for error in form.username.errors %}
+                <p style="color: red;">[{{ error }}]</p>
+                {% endfor %}
             </div>
           
             <div class="input-group">
                 {{ form.password(size=32)}}
                 <span>{{ form.password.label }}</span>
+
+                {% for error in form.password.errors %}
+                <p style="color: red;">[{{ error }}]</p>
+                {% endfor %}
             </div>
            
             <div class="input-group">

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {% if data.title %}
+        <title> {{ data.title }} </title>
+    {% else %}
+        <title> Purchase </title>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="col-md-6">
+    <div class="form-group row">
+        {% if data.heading %}
+            <h1> {{ data.heading }} </h1>
+        {% else %}
+            <h1> Purchase </h1>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> Part Name </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('party_name') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> Party Address </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('party_address') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> GST Number </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('gst_number') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> Vehicle Number </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('vehicle_number') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> No of Bags </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('no_of_bags') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> Variety </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('variety') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> Agent </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('agent') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> Date </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('timestamp') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> Quintol </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('quintol') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> Rate </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('rate') }} </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-sm-4 col-form-label"> Amount </label>
+                <div class="col-sm-8">
+                    <label class="form-control"> {{ form_data.get('amount') }} </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

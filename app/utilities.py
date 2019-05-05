@@ -53,19 +53,17 @@ def get_select_choice(func):
     return fn
 
 
-#@get_select_choice
 def get_variety_choices(**kwargs):
-    return [(v.id, v.name) for v in db.session.query(Variety).all()]
+    return [(v.id, v.name) for v in Variety.query.order_by(Variety.name).all()]
     return []
 
 
-#@get_select_choice
 def get_agent_choices(**kwargs):
-    return [(agent.id, agent.name) for agent in kwargs.get("type")().query.all()]
+    return [(agent.id, agent.name) for agent in kwargs.get("type").query.order_by(kwargs.get("type").name).all()]
     return []
 
 
 @get_select_choice
 def get_roles(**kwargs):
-    return [(r.id, r.name) for r in Roles.query.all()]
+    return [(r.id, r.name) for r in Roles.query.order_by(Roles.id).all()]
     return []

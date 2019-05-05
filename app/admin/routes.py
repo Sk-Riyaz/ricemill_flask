@@ -18,6 +18,7 @@ def user_form_handler(form, action):
                     email=form.email.data,
                     role_id=form.roles.data)
         user.set_password(form.password.data)
+        user.active = form.active.data
         return write_to_db(user, db.session.add)
     elif action == "delete":
         user = User.query.filter_by(form.id.data).first()
@@ -153,5 +154,5 @@ def admin_actions(action, form_type):
         flash(f"{form_type} {action}ed successfully")
         # logger.info(f"{form_type} {action}ed successfully")
         return redirect(form_type)
-    return render_template(f"{action}_{form_type}.html", form=form,
-                           data=generic_data)
+    return render_template(f"admin/{action}_{form_type}.html", form=form,
+                           data=generic_data, users=User.query.order_by(User.username).all())

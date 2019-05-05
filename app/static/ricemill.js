@@ -72,3 +72,27 @@ function updateSalesAmount() {
     amt.value = (quintol.value * rate.value) + (quintol.value * rate.value * gst / 100);
     return true;
 };
+
+function changeaction( ) {
+    //document.updateForm.action += document.submitname.split(":")[1];
+    alert("updateaction");
+}
+
+function getConfirmation() {
+    changeaction( );
+    /*
+    {% if action != "delete" %}
+        return true;
+    {% endif %}
+    var userName = document.submitname;
+    var retVal = confirm("Do you want to delete [" +userName.split(":")[1] +"]?");
+    if( retVal == true ) {
+        document.updateForm.user.value = userName.split(":")[0];
+        var chagedVal = document.updateForm.user.value;
+        return true;
+    }
+    else {
+        return false;
+    }
+    */
+}
