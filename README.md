@@ -24,6 +24,11 @@ Rice mill project based on flask
 	2. Change directory to the code path
 	3. Activate virtual env
 	4. Run "pip install -r requirements.txt"
+	
+4. Installation of mysql
+    
+    1. Download msi downloader from "https://dev.mysql.com/downloads/installer/"
+    2. Install the database
 
 
 ## Running script

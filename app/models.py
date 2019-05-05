@@ -122,12 +122,14 @@ class Purchase(BaseModel):
     moisture = db.Column(db.Float, nullable=False)
     rate = db.Column(db.Float, nullable=False)
     variety_id = db.Column(
-        db.String(64), db.ForeignKey('varieties.id'), nullable=False)
+        db.Integer, db.ForeignKey('varieties.id'), nullable=False)
     agent_id = db.Column(
         db.Integer, db.ForeignKey('purchase_agent.id'), nullable=False)
     timestamp = db.Column(
         db.DateTime, index=True, default=datetime.utcnow, nullable=False)
     amount = db.Column(db.Float, nullable=False)
+    #roles = db.relationship('Roles', uselist=False, secondary='user_roles')
+    variety = db.relationship('Variety', uselist=False)
 
     def __repr__(self):
         return f'<Puchase Id: {self.id} rstnumber: {self.rstnumber} Agent: {self.agent_id} Time: {self.timestamp}>'
@@ -142,7 +144,7 @@ class Sale(BaseModel):
     vehicle_number = db.Column(db.String(32), nullable=False)
     no_of_bags = db.Column(db.Integer, nullable=False)
     variety_id = db.Column(
-        db.String(64), db.ForeignKey('varieties.id'), nullable=False)
+        db.Integer, db.ForeignKey('varieties.id'), nullable=False)
     agent_id = db.Column(
         db.Integer, db.ForeignKey('sale_agent.id'), nullable=False)
     quintol = db.Column(db.Float, nullable=False)
@@ -150,6 +152,7 @@ class Sale(BaseModel):
     timestamp = db.Column(
         db.DateTime, index=True, default=datetime.utcnow, nullable=False)
     amount = db.Column(db.Float, nullable=False)
+    variety = db.relationship('Variety', uselist=False)
 
     def __repr__(self):
         return f'<Sale Id: {self.id} PartyName: {self.party_name} Agent: {self.agent_id} Time: {self.timestamp} VehicleNumber: {self.vehicle_number}>'

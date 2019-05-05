@@ -25,7 +25,12 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash("Invalid user or password")
             return redirect(url_for('auth.login'))
-        flash("User loggedin")
+
+        if not user.active:
+            flash("You are not authorized to access this page. Please contact Administrator")
+            return redirect(url_for('auth.login'))
+
+        #flash("User loggedin")
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         print(current_user.is_admin())
