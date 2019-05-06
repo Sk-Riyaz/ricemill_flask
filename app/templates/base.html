@@ -32,32 +32,6 @@
         <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"/></script>
         <script type="text/javascript" src="{{ url_for('static', filename='ricemill.js') }}"/></script>
 
-        {% if not current_user.is_anonymous %}
-
-
-        <!--ul class="nav nav-tabs justify-content-end">
-                <li class="nav-item active">
-                  <a class="nav-link " href="{{ url_for('core.home') }}">Home</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('core.sales') }}">Sales</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url_for('core.purchase') }}">Purchase</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" href="{{ url_for('auth.logout') }}">Logout</a>
-                </li>
-        </ul-->
-        
-     
-        {% endif %}
-
-        
-
-
-
-
          <ul class="nav nav-tabs justify-content-end">
             {% if not current_user.is_anonymous %}
                 <a href="{{ url_for('core.home') }}">
@@ -81,6 +55,14 @@
                 {% if current_user.is_super_user() %}
                     <a href="{{ url_for('admin.register', form_type='user') }}">
                         <button type="submit" name="adduser" class="btn btn-primary"> Add User </button>
+                    </a>
+
+                    <a href="{{ url_for('admin.admin_actions', action='update', form_type='user') }}">
+                        <button type="submit" name="updateuser" class="btn btn-primary"> Update User </button>
+                    </a>
+
+                    <a href="{{ url_for('admin.admin_actions', action='delete', form_type='user') }}">
+                        <button type="submit" name="deleteuser" class="btn btn-primary"> Delete User </button>
                     </a>
 
                     <a href="{{ url_for('admin.register', form_type='agent') }}">
@@ -107,9 +89,9 @@
     <body>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <div class="errorMessage">
+        <div class="errorMessage" align="center">
             {% for message in messages %}
-            <p>{{ message }}</p>
+            <p style="color : red">{{ message }}</p>
             {% endfor %}
         </div>
         {% endif %}

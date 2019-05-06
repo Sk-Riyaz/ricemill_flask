@@ -7,7 +7,7 @@
         </tr>
         {% for sale in sales %}
         <tr>
-            <td><a href="/report/sale?id={{sale.id}}">{{ sale.date }}</a></td>
+            <td><a href="/report/sale/detail?id={{sale.id}}">{{ sale.date }}</a></td>
             <td>{{ sale.agent }}</td>
         </tr>
         {% endfor %}

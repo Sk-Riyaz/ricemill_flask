@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {% if data.title %}
+        <title> {{ data.title }} </title>
+    {% else %}
+    <title> Purchase </title>
+    {% endif %}
+
+    {% if data.heading %}
+    <h1> {{ data.heading }} </h1>
+    {% else %}
+    <h1> Purchase </h1>
+    {% endif %}
+{% endblock %}
+
+<script>
+    function validate() {
+        var select = document.getElementById('roles');
+        return !select.value == 0;
+    }
+</script>
+
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
+
+{% block content %}
+
+<!--form action="/{{ action }}/" method="post" name="updateForm" onsubmit="return getConfirmation( this );"-->
+<form action="{{ url_for('admin.admin_actions', action='update', form_type='user') }}" onsubmit="return getConfirmation( this );">
+    {{ form.hidden_tag() }}
+    <table class="tableData" border="1" id="report">
+        <tr>
+            <th> Name </th>
+            <th> Email </th>
+            <th> Action </th>
+        </tr>
+
+        {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <!--button class="button" type="submit" onclick="document.submitname=this.value" value="{{ val }}" name="user" >{{ action }}</button-->
+                    Delete
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</form>
+
+<!-- onsubmit create invoice with formula -->
+{% endblock %}
