@@ -4,13 +4,13 @@ from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 
 from app import db
-from app.auth import bp
+from app.auth import auth_bp
 from app.auth.forms import LoginForm, ChangePasswordForm
 from app.models import User
 from app.utilities import write_to_db
 
 
-@bp.route('/login', methods=['GET', 'POST'])
+@auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         flash("User already loggedin")
@@ -41,7 +41,7 @@ def login():
     return render_template("auth/login.html", form=form)
 
 
-@bp.route('/logout')
+@auth_bp.route('/logout')
 @login_required
 def logout():
     logout_user()
@@ -51,7 +51,7 @@ def logout():
     return redirect(url_for('auth.login'))
 
 
-@bp.route('/change_password', methods=['GET', 'POST'])
+@auth_bp.route('/change_password', methods=['GET', 'POST'])
 @login_required
 def change_password():
     generic_data = {

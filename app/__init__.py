@@ -34,16 +34,16 @@ def create_app(config_class=Config):
     moment.init_app(app)
     #babel.init_app(app)
 
-    from app.errors import bp as errors_bp
+    from app.errors import errors_bp
     app.register_blueprint(errors_bp)
 
-    from app.auth import bp as auth_bp
+    from app.auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
-    from app.core import bp as core_bp
+    from app.core import core_bp
     app.register_blueprint(core_bp)
 
-    from app.admin import bp as admin_bp
+    from app.admin import admin_bp
     app.register_blueprint(admin_bp)
 
     if not app.debug:  # and not app.testing:

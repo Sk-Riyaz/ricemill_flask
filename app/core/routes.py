@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash, abort
 from flask_login import current_user, login_required
 
-from app.core import bp
+from app.core import core_bp
 from app import db  #, logger
 from app.core.forms import PurchaseForm, SalesForm, ReportForm
 from app.models import PurchaseAgent, SaleAgent, Purchase, Sale
@@ -45,8 +45,8 @@ def sale_form_handler(form):
     return write_to_db(sale_data)
 
 
-@bp.route('/', methods=['GET'])
-@bp.route('/home', methods=['GET'])
+@core_bp.route('/', methods=['GET'])
+@core_bp.route('/home', methods=['GET'])
 @login_required
 def home():
     generic_data = {
@@ -63,7 +63,7 @@ def home():
     return render_template("core/home.html", data=generic_data, purchases=purchases_data, sales=sales_data)
 
 
-@bp.route('/purchase', methods=['GET', 'POST'])
+@core_bp.route('/purchase', methods=['GET', 'POST'])
 @utilities.roles_required([Config.ADMINISTRATOR_STR])
 def purchase():
     generic_data = {
@@ -86,7 +86,7 @@ def purchase():
     return render_template("core/purchase.html", data=generic_data, form=form, purchases=purchases_data)
 
 
-@bp.route('/sales', methods=['GET', 'POST'])
+@core_bp.route('/sales', methods=['GET', 'POST'])
 @utilities.roles_required([Config.ADMINISTRATOR_STR])
 def sales():
     generic_data = {
@@ -116,7 +116,7 @@ def getModelFor(form_type):
     }.get(form_type)
 
 
-@bp.route('/report/<form_type>', methods=['GET', 'POST'])
+@core_bp.route('/report/<form_type>', methods=['GET', 'POST'])
 @utilities.roles_required([Config.ADMINISTRATOR_STR, Config.USER_STR])
 def report(form_type):
     generic_data = {
@@ -140,7 +140,7 @@ def report(form_type):
     return render_template("core/report.html", data=generic_data, form=form)
 
 
-@bp.route('/report/<form_type>/detail', methods=['GET'])
+@core_bp.route('/report/<form_type>/detail', methods=['GET'])
 def form_detail(form_type):
     generic_data = {
         "title": f"{form_type.capitalize()} Report",

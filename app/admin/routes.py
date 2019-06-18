@@ -3,7 +3,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 #from flask_user import roles_required
 from werkzeug.urls import url_parse
 
-from app.admin import bp
+from app.admin import admin_bp
 from app import db  # logger, login_manager, db
 from app.admin.forms import RegistrationForm, AgentForm, VarietyForm
 from app.models import User, PurchaseAgent, SaleAgent, Variety, Roles
@@ -98,7 +98,7 @@ def get_form_for_type(form_type):
     return form
 
 
-@bp.route('/add/<form_type>', methods=['GET', 'POST'])
+@admin_bp.route('/add/<form_type>', methods=['GET', 'POST'])
 @login_required
 @utilities.roles_required([Config.SUPER_USER_STR])
 def register(form_type):
@@ -132,7 +132,7 @@ def register(form_type):
                            data=generic_data)
 
 
-@bp.route('/admin/<action>/<form_type>', methods=['GET', 'POST'])
+@admin_bp.route('/admin/<action>/<form_type>', methods=['GET', 'POST'])
 @login_required
 @utilities.roles_required([Config.SUPER_USER_STR])
 def admin_actions(action, form_type):
