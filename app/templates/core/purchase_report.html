@@ -9,7 +9,8 @@
         </tr>
         {% for purchase in purchases %}
         <tr>
-            <td><a href="/report/purchase/detail?id={{purchase.id}}">{{ purchase.date }}</a></td>
+            <td><a href="/report/purchase/detail?id={{purchase.id}}">
+                {{ moment(purchase.date).format('DD-MM-YYYY HH:mm:ss') }} </a></td>
             <td>{{ purchase.agent }}</td>
             <td>{{ purchase.rstnumber }}</td>
         </tr>
