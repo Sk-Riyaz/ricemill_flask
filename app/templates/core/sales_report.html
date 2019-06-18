@@ -8,7 +8,7 @@
         {% for sale in sales %}
         <tr>
             <td><a href="/report/sale/detail?id={{sale.id}}">
-                {{ moment(purchase.created_on).format('DD-MM-YYYY HH:mm:ss') }} </a></td>
+                {{ moment(sale.created_on).format('DD-MM-YYYY HH:mm:ss') }} </a></td>
             <td>{{ sale.agent.name }}</td>
         </tr>
         {% endfor %}
