@@ -20,6 +20,7 @@
 (function() {
     window.addEventListener('load', function() {
       var varsel = document.getElementById('variety');
+      if(varsel){
 
       // create new option element
       var opt = document.createElement('option');
@@ -31,11 +32,15 @@
       opt.value = '';
 
       // add opt to end of select box (sel)
-      varsel.prepend(opt);
+
+        varsel.prepend(opt);
       varsel.options[0].selected = true;
+      }
+      
 
 
       var agentsel = document.getElementById('agent');
+      if(agentsel){
       var agentopt = document.createElement('option');
 
       // create text node to add to option element (opt)
@@ -46,6 +51,7 @@
 
       agentsel.prepend(agentopt);
       agentsel.options[0].selected = true;
+      }
     });
   }) ();
 

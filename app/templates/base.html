@@ -81,6 +81,9 @@
         </ul>
 
         {% block head %} {% endblock %}
+        {% block scripts %}
+            {{ moment.include_moment() }}
+        {% endblock %}
     </head>
     
     <body>
