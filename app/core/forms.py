@@ -45,7 +45,7 @@ class PurchaseForm(FlaskForm):
         DataRequired(message="Rate is required"),
         InputRequired(message="Rate is required")
     ])
-    date = DateField("Date")#, format="%M/%d/%Y")
+    date = DateField("Date")
     amount = FloatField("Amount", validators=[
         DataRequired(message="Amount is required"),
         InputRequired(message="Amount is required")
@@ -90,48 +90,17 @@ class SalesForm(FlaskForm):
         DataRequired(message="Rate is required"),
         InputRequired(message="Rate is required")
     ])
-    date = DateField("Date")#, format="%d-%m-%Y")
+    date = DateField("Date")
     amount = FloatField("Amount")
     submit = SubmitField('Submit')
 
 
-"""
-class PurchaseReportFields(FlaskForm):
-    rst_number = FloatField('RST No')
-    weight = FloatField("Weight", validators=[
-        DataRequired(message="Weight is required"),
-        InputRequired(message="Weight is required")
-    ])
-    variety = SelectField("Variety", coerce=int, validators=[
-        DataRequired(message="Variety is required"),
-        InputRequired(message="Variety is required"),
-        ChoiceValidator(choice="Variety")]
-    )
-    agent = StringField("Agent", validators=[
+class ReportForm(FlaskForm):
+    from_date = DateField("From Date")
+    to_date = DateField("To Date")
+    agent = SelectField("Agent", coerce=int, validators=[
         DataRequired(message="Agent is required"),
-        InputRequired(message="Agent is required")]
-    )
-    moisture = FloatField("Moisture", validators=[
-        DataRequired(message="Moisture is required"),
-        InputRequired(message="Moisture is required")
-    ])
-    rate = FloatField("Rate", validators=[
-        DataRequired(message="Rate is required"),
-        InputRequired(message="Rate is required")
-    ])
-    date = DateField("Date", format="%d-%m-%Y")
-    amount = FloatField("Amount", validators=[
-        DataRequired(message="Amount is required"),
-        InputRequired(message="Amount is required")
+        InputRequired(message="Agent is required")
     ])
     submit = SubmitField('Submit')
-
-
-class PurchaseReportForm(FlaskForm):
-    purchases = FieldList(FormField(PurchaseReportFields))
-
-
-class SalesReportForm(FlaskForm):
-    sales = FieldList(FormField(SalesForm))
-"""
 

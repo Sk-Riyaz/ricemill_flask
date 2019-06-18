@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 
 from app.core import bp
 from app import db  #, logger
-from app.core.forms import PurchaseForm, SalesForm #, PurchaseReportForm, SalesReportForm, PurchaseReportFields
+from app.core.forms import PurchaseForm, SalesForm, ReportForm
 from app.models import PurchaseAgent, SaleAgent, Purchase, Sale
 from app import utilities
 from app.utilities import write_to_db
@@ -58,24 +58,9 @@ def home():
     if message is not None:
         flash(message)
 
-    purchases_report = []
-    for _purchase in Purchase.query.order_by(Purchase.created_on.desc()).all():
-        form_data = {}
-        form_data.update({'id': _purchase.id})
-        form_data.update({'agent': _purchase.agent.name})
-        form_data.update({'date': _purchase.created_on})
-        purchases_report.append(form_data)
-        #print("purchase: ", purchase)
-
-    sales_report = []
-    for _sale in Sale.query.order_by(Sale.created_on.desc()).all():
-        form_data = {}
-        form_data.update({'id': _sale.id})
-        form_data.update({'agent': _sale.agent.name})
-        form_data.update({'date': _sale.created_on})
-        sales_report.append(form_data)
-
-    return render_template("core/home.html", data=generic_data, purchases=purchases_report, sales=sales_report)
+    purchases_data = Purchase.query.order_by(Purchase.created_on.desc()).all()
+    sales_data = Sale.query.order_by(Sale.created_on.desc()).all()
+    return render_template("core/home.html", data=generic_data, purchases=purchases_data, sales=sales_data)
 
 
 @bp.route('/purchase', methods=['GET', 'POST'])
@@ -97,18 +82,8 @@ def purchase():
         #logger.info("Purchase inserted Successfully")
         return redirect(url_for('core.purchase'))
 
-    #purchases = Purchase.query.all()
-    purchases_report = []
-    for _purchase in Purchase.query.order_by(Purchase.created_on.desc()).all():
-        form_data = {}
-        form_data.update({'id': _purchase.id})
-        form_data.update({'agent': _purchase.agent.name})
-        form_data.update({'date': _purchase.created_on})
-        form_data.update({'rstnumber': _purchase.rstnumber})
-        purchases_report.append(form_data)
-        #print("purchase: ", purchase)
-
-    return render_template("core/purchase.html", data=generic_data, form=form, purchases=purchases_report)
+    purchases_data = Purchase.query.order_by(Purchase.created_on.desc()).all()
+    return render_template("core/purchase.html", data=generic_data, form=form, purchases=purchases_data)
 
 
 @bp.route('/sales', methods=['GET', 'POST'])
@@ -130,16 +105,15 @@ def sales():
         flash("Sale inserted Successfully")
         return redirect(url_for('core.sales'))
 
-    sales_report = []
-    for _sale in Sale.query.order_by(Sale.created_on.desc()).all():
-        form_data = {}
-        form_data.update({'id': _sale.id})
-        form_data.update({'agent': _sale.agent.name})
-        form_data.update({'date': _sale.created_on})
-        sales_report.append(form_data)
-        #print("sales: ", _sale)
+    sales_data = Sale.query.order_by(Sale.created_on.desc()).all()
+    return render_template("core/sales.html", data=generic_data, form=form, sales=sales_data)
 
-    return render_template("core/sales.html", data=generic_data, form=form, sales=sales_report)
+
+def getModelFor(form_type):
+    return {
+        'purchase': Purchase,
+        'sale': Sale
+    }.get(form_type)
 
 
 @bp.route('/report/<form_type>', methods=['GET', 'POST'])
@@ -147,50 +121,23 @@ def sales():
 def report(form_type):
     generic_data = {
         "title": "Report",
-        "heading": "Report"
+        "heading": "Report",
+        "form_type": form_type
     }
 
-    purchases_report = []
-    purchases = Purchase.query.all()
-    for _purchase in purchases:
-        form_data = {}
-        form_data.update({'id': _purchase.id})
-        form_data.update({'agent': _purchase.agent.name})
-        form_data.update({'date': _purchase.timestamp})
-        purchases_report.append(form_data)
-        print("purchase: ", purchase)
-    return render_template("core/report.html", data=generic_data, purchases=purchases_report)
+    model = getModelFor(form_type)
+    if model is None:
+        abort(404)
 
-
-def populate_data(form_type, model_data):
-    if form_type == 'purchase':
-        return {
-            'id': model_data.id,
-            'rstnumber': model_data.rstnumber,
-            'weight': model_data.weight,
-            'moisture': model_data.moisture,
-            'rate': model_data.rate,
-            'variety': model_data.variety.name,
-            'agent': model_data.agent.name,
-            'timestamp': model_data.timestamp,
-            'amount': model_data.amount
-        }
-    elif form_type == 'sale':
-        print("Riyaz   ", model_data.party_name)
-        return {
-            'id': model_data.id,
-            'party_name': model_data.party_name,
-            'party_address': model_data.party_address,
-            'gst_number': model_data.gst_number,
-            'vehicle_number': model_data.vehicle_number,
-            'no_of_bags': model_data.no_of_bags,
-            'variety': model_data.variety.name,
-            'agent': model_data.agent.name,
-            'timestamp': model_data.timestamp,
-            'quintol': model_data.quintol,
-            'rate': model_data.rate,
-            'amount': model_data.amount
-        }
+    form = ReportForm()
+    form.agent.choices = utilities.get_agent_choices(type=eval(f"{form_type.capitalize()}Agent"))
+    if form.validate_on_submit():
+        model_data = model.query.filter(
+            model.created_on.between(
+                form.from_date.data, form.to_date.data)
+        ).all()
+        return render_template("core/report.html", data=generic_data, form=form, purchases=model_data, sales=model_data)
+    return render_template("core/report.html", data=generic_data, form=form)
 
 
 @bp.route('/report/<form_type>/detail', methods=['GET'])
@@ -201,17 +148,10 @@ def form_detail(form_type):
     }
 
     id = request.args.get('id')
-    print(form_type, id)
-    model = {
-        'purchase': Purchase,
-        'sale': Sale
-    }
-
-    model_type = model.get(form_type)
-    if model_type is None:
+    model = getModelFor(form_type)
+    if model is None:
         abort(404)
 
-    model_data = model_type.query.filter_by(id=id).first_or_404()
-    form_data = populate_data(form_type, model_data)
-    return render_template(f"core/{form_type}_detail.html", data=generic_data, form_data=form_data)
+    model_data = model.query.filter_by(id=id).first_or_404()
+    return render_template(f"core/{form_type}_detail.html", data=generic_data, form_data=model_data)
 

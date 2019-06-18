@@ -6,15 +6,67 @@
     {% else %}
         <title> Purchase </title>
     {% endif %}
-
-    {% if data.heading %}
-        <h1> {{ data.heading }} </h1>
-    {% else %}
-        <h1> Purchase </h1>
-    {% endif %}
 {% endblock %}
 
 {% block content %}
-    {% include 'core/purchase_report.html' %}
-    {% include 'core/sales_report.html' %}
+
+<form name="report" id="report" method="post" class="needs-validation form" novalidate>
+    {{ form.hidden_tag() }}
+    <div class="col-md-6">
+        <div class="form-group row">
+            {% if data.heading %}
+                <h1> {{ data.heading }} </h1>
+            {% else %}
+                <h1> Report </h1>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.from_date.label(class_="col-sm-4 col-form-label") }}
+                    <div class="col-sm-8">
+                        {{ form.from_date(class_="form-control", required="true") }}
+
+                        {% for error in form.from_date.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.to_date.label(class_="col-sm-4 col-form-label") }}
+                    <div class="col-sm-8">
+                        {{ form.to_date(class_="form-control", required="true") }}
+
+                        {% for error in form.to_date.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {{ form.agent.label(class_="col-sm-4 col-form-label") }}
+
+                    <div class="col-sm-8">
+                        {{ form.agent(class_="form-control") }}
+
+                        {% for error in form.agent.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-offset-4 col-sm-8">
+                {{ form.submit(class_="btn btn-default") }}
+            </div>
+        </div>
+    </div>
+</form>
+
+{% include 'core/' + data.form_type + 's_report.html' %}
+
 {% endblock %}
