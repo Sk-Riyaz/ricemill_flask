@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash, abort
+from flask import render_template, request, redirect, url_for, flash, abort, jsonify
 from flask_login import current_user, login_required
 
 from app.core import core_bp
@@ -155,3 +155,8 @@ def form_detail(form_type):
     model_data = model.query.filter_by(id=id).first_or_404()
     return render_template(f"core/{form_type}_detail.html", data=generic_data, form_data=model_data)
 
+
+@core_bp.route('/ajax/get', methods=['GET', 'POST'])
+def ajaxGet():
+    print("ajaxGet Called")
+    return jsonify({'key': 'value', 'key2':'riyaz'})
