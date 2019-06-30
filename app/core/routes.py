@@ -83,7 +83,7 @@ def purchase():
         return redirect(url_for('core.purchase'))
 
     purchases_data = Purchase.query.order_by(Purchase.created_on.desc()).all()
-    return render_template("core/purchase.html", data=generic_data, form=form, purchases=purchases_data)
+    return render_template("core/purchase.html", data=generic_data, form=form, purchases=purchases_data, is_submitted=form.is_submitted())
 
 
 @core_bp.route('/sales', methods=['GET', 'POST'])
@@ -106,7 +106,7 @@ def sales():
         return redirect(url_for('core.sales'))
 
     sales_data = Sale.query.order_by(Sale.created_on.desc()).all()
-    return render_template("core/sales.html", data=generic_data, form=form, sales=sales_data)
+    return render_template("core/sales.html", data=generic_data, form=form, sales=sales_data, is_submitted=form.is_submitted())
 
 
 def getModelFor(form_type):

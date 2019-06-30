@@ -71,7 +71,7 @@ def create_super_user():
         return True
     try:
         role_id = Roles.query.filter_by(name="SUPER_USER").first()
-        user = User(username="super", email="super@mymail.com", role_id=role_id.id)
+        user = User(username="super", email="super@mymail.com", role_id=role_id.id, active=True)
         user.set_password(sys.argv[1])
         db.session.add(user)
         db.session.commit()

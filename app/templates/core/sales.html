@@ -14,7 +14,13 @@
 <input type="checkbox" name="HalfBoiled" value="1"> Half Boiled <br>
 
 {% block content %}
-<form name="sale" id="sale" method="post" class="needs-validation form" onsubmit=updateSalesAmount()>
+
+{% set submitted = "" %}
+{% if is_submitted == true %}
+    {% set submitted = 'submitted' %}
+{% endif %}
+
+<form name="sale" id="sale" method="post" class="needs-validation form {{ submitted }}" onsubmit=updateSalesAmount()>
     {{ form.hidden_tag() }}
     <div class="col-md-6">
         <div class="form-group row ">
@@ -126,7 +132,7 @@
                 <div class="col-md-12">
                     {{ form.date.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8" data-provide="datepicker">
-                        {{ form.date(class_="form-control datepicker", placeholder="DD-MM-YYYY", type="date") }}
+                        {{ form.date(class_="form-control datepicker", placeholder="DD-MM-YYYY", type="date", required="true") }}
 
                         {% for error in form.date.errors %}
                             <span style="color: red;">[{{ error }}]</span>

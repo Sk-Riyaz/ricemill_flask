@@ -35,6 +35,10 @@ div.well{
     border: 1px solid  red;
   }
 
+  .was-validated select:required:invalid  {
+    border: 1px solid  red;
+  }
+
   /* body{
 /*     background: #00589F;
     color: white; 

@@ -9,7 +9,13 @@
 {% endblock %}
     
 {% block content %}
-<form name="purchase" id="purchase" method="post" class="needs-validation form" novalidate onsubmit=updatePurchaseAmount()>
+
+{% set submitted = "" %}
+{% if is_submitted == true %}
+    {% set submitted = 'submitted' %}
+{% endif %}
+
+<form name="purchase" id="purchase" method="post" class="needs-validation form {{ submitted }}" novalidate onsubmit=updatePurchaseAmount()>
     {{ form.hidden_tag() }}
     <div class="col-md-6">
         <div class="form-group row">
@@ -103,7 +109,7 @@
                 <div class="col-md-12">
                     {{ form.date.label(class_="col-sm-4 col-form-label") }}
                     <div class="col-sm-8" data-provide="datepicker">
-                        {{ form.date(class_="form-control datepicker", placeholder="DD-MM-YYYY", type="date") }}
+                        {{ form.date(class_="form-control datepicker", placeholder="MM-DD-YYYY", type="date", required="true") }}
 
                         {% for error in form.date.errors %}
                             <span style="color: red;">[{{ error }}]</span>

@@ -2,9 +2,9 @@
     'use strict';
     window.addEventListener('load', function() {
       // Fetch all the forms we want to apply custom Bootstrap validation styles to
-      var forms = document.getElementsByClassName('needs-validation');
+      let forms = document.getElementsByClassName('needs-validation');
       // Loop over them and prevent submission
-      var validation = Array.prototype.filter.call(forms, function(form) {
+      let validation = Array.prototype.filter.call(forms, function(form) {
         form.addEventListener('submit', function(event) {
           if (form.checkValidity() === false) {
             event.preventDefault();
@@ -19,11 +19,15 @@
 
 (function() {
     window.addEventListener('load', function() {
-      var varsel = document.getElementById('variety');
+      let formName = document.getElementsByTagName("form");
+      if (formName.length > 0 && formName[0].classList.contains("submitted")) {
+         return false;
+      }
+      let varsel = document.getElementById('variety');
       if(varsel){
 
       // create new option element
-      var opt = document.createElement('option');
+      let opt = document.createElement('option');
 
       // create text node to add to option element (opt)
       opt.appendChild( document.createTextNode('Select') );
@@ -39,9 +43,9 @@
       
 
 
-      var agentsel = document.getElementById('agent');
+      let agentsel = document.getElementById('agent');
       if(agentsel){
-      var agentopt = document.createElement('option');
+      let agentopt = document.createElement('option');
 
       // create text node to add to option element (opt)
       agentopt.appendChild( document.createTextNode('Select') );
@@ -56,19 +60,19 @@
   }) ();
 
 function updatePurchaseAmount() {
-    var rate = document.getElementById("rate");
+    let rate = document.getElementById("rate");
 
-    var amt = document.getElementById('amount');
+    let amt = document.getElementById('amount');
     amt.value = rate.value;
     return true;
 };
 
 function updateSalesAmount() {
-    var rate = document.getElementById('rate');
-    var quintol = document.getElementById('quintol');
-    var gst = 5;
+    let rate = document.getElementById('rate');
+    let quintol = document.getElementById('quintol');
+    let gst = 5;
 
-    var amt = document.getElementById('amount');
+    let amt = document.getElementById('amount');
     amt.value = (quintol.value * rate.value) + (quintol.value * rate.value * gst / 100);
     return true;
 };
@@ -84,11 +88,11 @@ function getConfirmation() {
     {% if action != "delete" %}
         return true;
     {% endif %}
-    var userName = document.submitname;
-    var retVal = confirm("Do you want to delete [" +userName.split(":")[1] +"]?");
+    let userName = document.submitname;
+    let retVal = confirm("Do you want to delete [" +userName.split(":")[1] +"]?");
     if( retVal == true ) {
         document.updateForm.user.value = userName.split(":")[0];
-        var chagedVal = document.updateForm.user.value;
+        let chagedVal = document.updateForm.user.value;
         return true;
     }
     else {
@@ -96,3 +100,4 @@ function getConfirmation() {
     }
     */
 }
+
