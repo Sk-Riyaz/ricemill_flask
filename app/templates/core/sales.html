@@ -20,7 +20,7 @@
     {% set submitted = 'submitted' %}
 {% endif %}
 
-<form name="sale" id="sale" method="post" class="needs-validation form {{ submitted }}" onsubmit=updateSalesAmount()>
+<form name="sale" id="sale" method="post" class="needs-validation form {{ submitted }}" novalidate onsubmit=updateSalesAmount()>
     {{ form.hidden_tag() }}
     <div class="col-md-6">
         <div class="form-group row ">
