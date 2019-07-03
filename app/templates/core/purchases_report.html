@@ -1,18 +1,16 @@
-<div class="col-md-6">
-    <h1> Purchase Report </h1>
-    <table border="1" id="report">
-        <tr>
-            <th> Date </th>
-            <th> Agent Name </th>
-            <th> RST No </th>
-        </tr>
-        {% for purchase in purchases %}
-        <tr>
-            <td><a href="/report/purchase/detail?id={{purchase.id}}">
+<h1> Purchase Report </h1>
+<table border="1" id="report">
+    <tr>
+        <th> Date </th>
+        <th> Agent Name </th>
+        <th> RST No </th>
+    </tr>
+    {% for purchase in purchases %}
+    <tr>
+        <td><a href="/report/purchase/detail?id={{purchase.id}}">
                 {{ moment(purchase.created_on).format('DD-MM-YYYY HH:mm:ss') }} </a></td>
-            <td>{{ purchase.agent.name }}</td>
-            <td>{{ purchase.rstnumber }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
+        <td>{{ purchase.agent.name }}</td>
+        <td>{{ purchase.rstnumber }}</td>
+    </tr>
+    {% endfor %}
+</table>

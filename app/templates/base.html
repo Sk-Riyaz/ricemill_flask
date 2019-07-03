@@ -4,9 +4,12 @@
 <head>
     <style>
         #report {
-            /*font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;*/
             border-collapse: collapse;
-            width: 100%;
+            width: 97%;
+        }
+
+        #report tr {
+            line-height: 14px;
         }
 
         #report td,
@@ -27,7 +30,7 @@
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
-            background-color: #4CAF50;
+            background-color: #4da6ff;
             color: white;
         }
 
@@ -63,11 +66,8 @@
     <script type="text/javascript" src="{{ url_for('static', filename='popper.min.js') }}"> </script>
     <script type="text/javascript" src="{{ url_for('static', filename='bootstrap.min.js') }}"> </script>
     <script type="text/javascript" src="{{ url_for('static', filename='ricemill.js') }}"> </script>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
 
+    {% if not current_user.is_anonymous %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{{ url_for('core.home') }}">Rice Mill</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -77,7 +77,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                {% if not current_user.is_anonymous %}
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url_for('core.home') }}">Home</a>
                 </li>
@@ -134,10 +133,10 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
                 </li>
-                {% endif %}
             </ul>
         </div>
     </nav>
+    {% endif %}
 
     {% block head %} {% endblock %}
     {% block scripts %}
