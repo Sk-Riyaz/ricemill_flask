@@ -29,6 +29,10 @@ Rice mill project based on flask
     
     1. Download msi downloader from "https://dev.mysql.com/downloads/installer/"
     2. Install the database
+    3. DB initialization
+        a) flask db init
+        b) flask db migrate
+        c) flask db upgrade
 
 
 ## Running script
