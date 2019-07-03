@@ -31,13 +31,19 @@ div.well{
     padding-left: 15px !important;
   }
 
-  .was-validated input:required:invalid  {
-    border: 1px solid  red;
+  .was-validated input:required:invalid   {
+    border: 1px solid  #FF4B2B;
   }
 
   .was-validated select:required:invalid  {
-    border: 1px solid  red;
+    border: 1px solid  #FF4B2B;
   }
+  
+  
+  /* .btn-primary{
+    background-color: #FF4B2B !important;
+    border-color: #FF4B2B !important;
+  } */
 
   /* body{
 /*     background: #00589F;
