@@ -1,148 +1,154 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    {% if data.title %}
-        <title> {{ data.title }} </title>
-    {% else %}
-        <title> Purchase </title>
-    {% endif %}
+{% if data.title %}
+<title> {{ data.title }} </title>
+{% else %}
+<title> Purchase </title>
+{% endif %}
 {% endblock %}
-    
+
 {% block content %}
 
 {% set submitted = "" %}
 {% if is_submitted == true %}
-    {% set submitted = 'submitted' %}
+{% set submitted = 'submitted' %}
 {% endif %}
 
-<form name="purchase" id="purchase" method="post" class="needs-validation form {{ submitted }}" novalidate onsubmit=updatePurchaseAmount()>
-    {{ form.hidden_tag() }}
+<div class="row">
     <div class="col-md-6">
-        <div class="form-group row">
+        <form name="purchase" id="purchase" method="post" class="needs-validation form {{ submitted }}" novalidate
+            onsubmit=updatePurchaseAmount()>
+            {{ form.hidden_tag() }}
             {% if data.heading %}
-                <h1> {{ data.heading }} </h1>
+            <h1> {{ data.heading }} </h1>
             {% else %}
-                <h1> Purchase </h1>
+            <h1> Purchase </h1>
             {% endif %}
 
             <div class="row">
-                <div class="col-md-12">
-                    {{ form.rst_number.label(class_="col-sm-4 col-form-label") }}
-                    <div class="col-sm-8">
-                        {{ form.rst_number(class_="form-control", placeholder="RST Number" ,required="true") }}
-
-                        {% for error in form.rst_number.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
+                <div class="col-md-4">
+                    {{ form.rst_number.label(class_="col-form-label") }}
                 </div>
+
+                <div class="col-md-8">
+                    {{ form.rst_number(class_="form-control", placeholder="RST Number" ,required="true") }}
+
+                    {% for error in form.rst_number.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    {{ form.weight.label(class_="col-sm-4 col-form-label") }}
-                    <div class="col-sm-8">
-                        {{ form.weight(class_="form-control", placeholder="Weight") }}
 
-                        {% for error in form.weight.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
+                <div class="col-md-4">
+                    {{ form.weight.label(class_=" col-form-label") }}
                 </div>
+
+                <div class="col-md-8">
+                    {{ form.weight(class_="form-control", placeholder="Weight") }}
+
+                    {% for error in form.weight.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    {{ form.variety.label(class_="col-sm-4 col-form-label") }}
-
-                    <div class="col-sm-8">
-                        {{ form.variety(class_="form-control") }}
-
-                        {% for error in form.variety.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
+                <div class="col-md-4">
+                    {{ form.variety.label(class_="col-form-label") }}
                 </div>
+                <div class="col-md-8">
+                    {{ form.variety(class_="form-control") }}
+
+                    {% for error in form.variety.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    {{ form.agent.label(class_="col-sm-4 col-form-label") }}
-
-                    <div class="col-sm-8">
-                        {{ form.agent(class_="form-control") }}
-
-                        {% for error in form.agent.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
+                <div class="col-md-4">
+                    {{ form.agent.label(class_="col-form-label") }}
                 </div>
-            </div>
+                <div class="col-md-8">
+                    {{ form.agent(class_="form-control") }}
 
+                    {% for error in form.agent.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+
+            </div>
             <div class="row">
-                <div class="col-md-12">
-                    {{ form.moisture.label(class_="col-sm-4 col-form-label") }}
-                    <div class="col-sm-8">
-                        {{ form.moisture(class_="form-control", placeholder="Moisture") }}
-
-                        {% for error in form.moisture.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
+                <div class="col-md-4">
+                    {{ form.moisture.label(class_="col-form-label") }}
+                </div>
+                <div class="col-md-8">
+                    {{ form.moisture(class_="form-control", placeholder="Moisture") }}
+                    {% for error in form.moisture.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
                 </div>
             </div>
-
             <div class="row">
-                <div class="col-md-12">
-                    {{ form.rate.label(class_="col-sm-4 col-form-label") }}
-                    <div class="col-sm-8">
-                        {{ form.rate(class_="form-control", placeholder="Rate") }}
-
-                        {% for error in form.rate.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
+                <div class="col-md-4">
+                    {{ form.rate.label(class_="col-form-label") }}
+                </div>
+                <div class="col-md-8">
+                    {{ form.rate(class_="form-control", placeholder="Rate") }}
+                    {% for error in form.rate.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
                 </div>
             </div>
-
             <div class="row">
-                <div class="col-md-12">
-                    {{ form.date.label(class_="col-sm-4 col-form-label") }}
-                    <div class="col-sm-8" data-provide="datepicker">
-                        {{ form.date(class_="form-control datepicker", placeholder="MM-DD-YYYY", type="date", required="true") }}
+                <div class="col-md-4">
+                    {{ form.date.label(class_="col-form-label") }}
+                </div>
+                <div class="col-md-8" data-provide="datepicker">
+                    {{ form.date(class_="form-control datepicker", placeholder="MM-DD-YYYY", type="date", required="true") }}
 
-                        {% for error in form.date.errors %}
-                            <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                    <!--div class="input-group-addon">
-                        <span class="glyphicon glyphicon-th"></span>
-                    </div-->
-
+                    {% for error in form.date.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
                 </div>
             </div>
-
             <div class="row">
-                <div class="col-md-12">
-                    {{ form.amount.label(class_="col-sm-4 col-form-label", disabled=disabled) }}
-                    <div class="col-sm-8">
-                        {{ form.amount(class_="form-control", placeholder="Amount") }}
-
-                        {% for error in form.amount.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
+                <div class="col-md-4">
+                    {{ form.amount.label(class_=" col-form-label", disabled=disabled) }}
                 </div>
+                <div class="col-md-8">
+                    {{ form.amount(class_="form-control", placeholder="Amount") }}
 
+                    {% for error in form.amount.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="col-sm-offset-4 col-sm-8">
-                {{ form.submit(class_="btn btn-primary") }}
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    {{ form.submit(class_="btn btn-primary") }}
+                </div>
+                <div class="col-md-2 offset-md-2">
+                    <button class="btn btn-primary">Reset</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-</form>
+    <div class="col-md-6" style="margin-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;">
+        {% include 'core/purchases_report.html' %}
+
+    </div>
+</div>
 
 
-{% include 'core/purchases_report.html' %}
+
 
 {% endblock %}
