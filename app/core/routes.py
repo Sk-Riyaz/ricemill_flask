@@ -136,7 +136,7 @@ def report(form_type):
             model.created_on.between(
                 form.from_date.data, form.to_date.data)
         ).all()
-        return render_template("core/report.html", data=generic_data, form=form, purchases=model_data, sales=model_data)
+        return render_template("core/report.html", data=generic_data, form=form, purchases=model_data, sales=model_data, is_submitted=form.is_submitted())
     return render_template("core/report.html", data=generic_data, form=form)
 
 

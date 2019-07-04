@@ -1,14 +1,14 @@
-    <h1> Sales Report </h1>
-    <table border="1" id="report">
-        <tr>
-            <th> Date </th>
-            <th> Agent Name </th>
-        </tr>
-        {% for sale in sales %}
-        <tr>
-            <td><a href="/report/sale/detail?id={{sale.id}}">
+<h1> Sales Report </h1>
+<table border="1" id="report">
+    <tr>
+        <th> Date </th>
+        <th> Agent Name </th>
+    </tr>
+    {% for sale in sales %}
+    <tr>
+        <td><a href="/report/sale/detail?id={{sale.id}}">
                 {{ moment(sale.created_on).format('DD-MM-YYYY HH:mm:ss') }} </a></td>
-            <td>{{ sale.agent.name }}</td>
-        </tr>
-        {% endfor %}
-    </table>
+        <td>{{ sale.agent.name }}</td>
+    </tr>
+    {% endfor %}
+</table>
