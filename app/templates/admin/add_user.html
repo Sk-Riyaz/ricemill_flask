@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    {% if data.title %}
-        <title> {{ data.title }} </title>
-    {% else %}
-        <title> Purchase </title>
-    {% endif %}
+{% if data.title %}
+<title> {{ data.title }} </title>
+{% else %}
+<title> Add User </title>
+{% endif %}
 
-    {% if data.heading %}
-        <h1> {{ data.heading }} </h1>
-    {% else %}
-        <h1> Purchase </h1>
-    {% endif %}
+{% if data.heading %}
+<h1> {{ data.heading }} </h1>
+{% else %}
+<h1> Add User </h1>
+{% endif %}
 {% endblock %}
 
 <script>
@@ -21,41 +21,45 @@
     }
 </script>
 
-<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
-    
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/-->
+<!-- Auto generated from backend -->
+
 {% block content %}
-    <form name="register" id="register" method="post" onsubmit="return validate()">
-        {{ form.hidden_tag() }}
-        
-        <p> {{ form.username.label }} {{ form.username(size=32) }} </p>
-        {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    
-        <p> {{ form.password.label }} {{ form.password(size=32) }} </p>
-        {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+<div class="row">
+    <div class="col-md-6">
+        <form name="register" id="register" method="post" class="needs-validation form {{ submitted }}" novalidate
+            onsubmit="return validate()">
+            {{ form.hidden_tag() }}
 
-        <p> {{ form.password2.label }} {{ form.password2(size=32) }} </p>
-        {% for error in form.password2.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+            <div class="row">
+                {{ render_field(form.username, class_="form-control", placeholder="RST Number", size=32) }}
+            </div>
 
-        <p> {{ form.email.label }} {{ form.email }} </p>
-        {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+            <div class="row">
+                {{ render_field(form.password, class_="form-control", placeholder="Password", size=32) }}
+            </div>
 
-        <p> {{ form.roles.label }} {{ form.roles }} </p>
-        {% for error in form.roles.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+            <div class="row">
+                {{ render_field(form.password2, class_="form-control", placeholder="Confirm Passsword") }}
+            </div>
 
-        <p>{{ form.active() }} {{ form.active.label }}</p>
+            <div class="row">
+                {{ render_field(form.email, class_="form-control", placeholder="Email") }}
+            </div>
 
-        <p> {{ form.submit() }} </p>
-    </form>
+            <div class="row">
+                {{ render_field(form.roles, class_="form-control") }}
+            </div>
 
-     <!-- onsubmit create invoice with formula -->
+            <label style="display: flex; align-items: center;">
+                <div style="margin-top: 0px !important; margin-right: 5px !important;">
+                    {{ form.active() }}
+                </div>
+                {{ form.active.label(style="margin-bottom: 0px !important") }}
+            </label>
+
+            {{ form.submit() }}
+        </form>
+    </div>
+</div>
 {% endblock %}
