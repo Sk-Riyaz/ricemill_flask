@@ -1,32 +1,39 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    {% if data.title %}
-        <title> {{ data.title }} </title>
-    {% else %}
-        <title> Purchase </title>
-    {% endif %}
-
-    {% if data.heading %}
-        <h1> {{ data.heading }} </h1>
-    {% else %}
-        <h1> Purchase </h1>
-    {% endif %}
+{% if data.title %}
+<title> {{ data.title }} </title>
+{% else %}
+<title> Purchase </title>
+{% endif %}
 {% endblock %}
 
-<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
-    
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/-->
+<!-- Auto generated from backend -->
+
 {% block content %}
-    <form name="register" id="register" method="post">
-        {{ form.hidden_tag() }}
-        
-        <p> {{ form.name.label }} {{ form.name(size=32) }} </p>
-        {% for error in form.name.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+<div class="row">
+    <div class="col-md-12">
+        <form name="register" id="register" class="admin-form needs-validation form {{ submitted }}" method="post"
+            novalidate>
+            {{ form.hidden_tag() }}
 
-        <p> {{ form.submit() }} </p>
-    </form>
+            {% if data.heading %}
+            <h1> {{ data.heading }} </h1>
+            {% else %}
+            <h1> Purchase </h1>
+            {% endif %}
+            {{ render_admin_field(form.name, class_="form-control", placeholder="Variety Name", size=32) }}
 
-     <!-- onsubmit create invoice with formula -->
+            <div class="row">
+                <div class="col-md-4 offset-md-0">
+                    {{ form.submit(class_="btn btn-primary") }}
+                </div>
+                <div class="col-md-2 offset-md-6">
+                    <button class="btn btn-primary">Reset</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}

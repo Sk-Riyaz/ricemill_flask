@@ -354,6 +354,7 @@ label {
   background-color: #4da6ff!important;
   border-color: #4da6ff!important;
 }
+
 .navbar-light .navbar-brand {
   color: #ffffff !important;
 }
@@ -361,10 +362,12 @@ label {
 .navbar-light .navbar-nav .nav-link {
   color: #ffffff !important;
 }
-.settings{
+
+.settings {
   fill: #ffffff;
 }
-.admin-form{
+
+.admin-form {
   width: 45%;
   border: 1px solid #4da6ff;
 }

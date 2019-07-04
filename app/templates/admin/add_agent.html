@@ -1,52 +1,42 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    {% if data.title %}
-        <title> {{ data.title }} </title>
-    {% else %}
-        <title> Purchase </title>
-    {% endif %}
-
-    {% if data.heading %}
-        <h1> {{ data.heading }} </h1>
-    {% else %}
-        <h1> Purchase </h1>
-    {% endif %}
+{% if data.title %}
+<title> {{ data.title }} </title>
+{% else %}
+<title> Add Agent </title>
+{% endif %}
 {% endblock %}
 
-<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
-    
 {% block content %}
-    <form name="register" id="register" class="needs-validation"  method="post" novalidate>
-        {{ form.hidden_tag() }}
-        
-        <p> {{ form.name.label }} {{ form.name(size=32) }} </p>
-        {% for error in form.name.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+<div class="row">
+    <div class="col-md-12">
+        <form name="register" id="register" class="admin-form needs-validation form {{ submitted }}" method="post"
+            novalidate>
+            {{ form.hidden_tag() }}
 
-        <p> {{ form.email.label }} {{ form.email }} </p>
-        {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+            {% if data.heading %}
+            <h1> {{ data.heading }} </h1>
+            {% else %}
+            <h1> Add Agent </h1>
+            {% endif %}
 
-        <p> {{ form.mobile.label }} {{ form.mobile(size=15) }} </p>
-        {% for error in form.mobile.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+            {{ render_admin_field(form.name, class_="form-control", placeholder="Agent Name", size=32) }}
+            {{ render_admin_field(form.email, class_="form-control", placeholder="Email", size=32) }}
+            {{ render_admin_field(form.mobile, class_="form-control", placeholder="Mobile Number") }}
+            {{ render_admin_field(form.address, class_="form-control", placeholder="Address") }}
+            {{ render_admin_field(form.agent_type, class_="form-control") }}
 
-        <p> {{ form.address.label }} {{ form.address }} </p>
-        {% for error in form.address.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+            <div class="row">
+                <div class="col-md-4 offset-md-0">
+                    {{ form.submit(class_="btn btn-primary") }}
+                </div>
+                <div class="col-md-2 offset-md-6">
+                    <button class="btn btn-primary">Reset</button>
+                </div>
+            </div>
 
-        <p> {{ form.agent_type.label }} {{ form.agent_type }} </p>
-        {% for error in form.agent_type.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-
-        <p> {{ form.submit() }} </p>
-    </form>
-
-     <!-- onsubmit create invoice with formula -->
+        </form>
+    </div>
+</div>
 {% endblock %}

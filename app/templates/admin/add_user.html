@@ -6,12 +6,6 @@
 {% else %}
 <title> Add User </title>
 {% endif %}
-
-{% if data.heading %}
-<h1> {{ data.heading }} </h1>
-{% else %}
-<h1> Add User </h1>
-{% endif %}
 {% endblock %}
 
 <script>
@@ -21,15 +15,18 @@
     }
 </script>
 
-<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/-->
-<!-- Auto generated from backend -->
-
 {% block content %}
 <div class="row">
     <div class="col-md-12">
-        <form name="register" id="register" style="width: 45%;" method="post" class="admin-form needs-validation form {{ submitted }}" novalidate
-            onsubmit="return validate()">
+        <form name="register" id="register" method="post" class="admin-form needs-validation form {{ submitted }}"
+            novalidate onsubmit="return validate()">
             {{ form.hidden_tag() }}
+
+            {% if data.heading %}
+            <h1> {{ data.heading }} </h1>
+            {% else %}
+            <h1> Add User </h1>
+            {% endif %}
 
             {{ render_admin_field(form.username, class_="form-control", placeholder="User Name", size=32) }}
             {{ render_admin_field(form.password, class_="form-control", placeholder="Password", size=32) }}
@@ -43,16 +40,15 @@
                 </div>
                 {{ form.active.label(style="margin-bottom: 0px !important") }}
             </label>
-            <div class="row">
-                    <div class="col-md-4 offset-md-0">
-                        {{ form.submit(class_="btn btn-primary") }}
-                    </div>
-                    <div class="col-md-2 offset-md-6">
-                        <button class="btn btn-primary">Reset</button>
-                    </div>
-                </div>
 
-            
+            <div class="row">
+                <div class="col-md-4 offset-md-0">
+                    {{ form.submit(class_="btn btn-primary") }}
+                </div>
+                <div class="col-md-2 offset-md-6">
+                    <button class="btn btn-primary">Reset</button>
+                </div>
+            </div>
         </form>
     </div>
 </div>
