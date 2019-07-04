@@ -162,6 +162,17 @@
     </div>
     {% endmacro %}
 
+    {% macro render_admin_field(field) %}
+    <div class="form-group">
+        {{ field.label(class_="col-form-label") }}
+        {{ field(**kwargs)|safe }}
+
+        {% for error in field.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    {% endmacro %}
+
     {% block head %} {% endblock %}
     {% block scripts %}
     {{ moment.include_moment() }}
