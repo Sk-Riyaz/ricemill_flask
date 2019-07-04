@@ -371,3 +371,11 @@ label {
   width: 45%;
   border: 1px solid #4da6ff;
 }
+.navbar{
+  height: 55px !important;
+}
+
+.user-form {
+  border: 1px solid #4da6ff;
+  margin-left: 10px;
+}

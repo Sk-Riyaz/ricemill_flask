@@ -19,18 +19,31 @@
 {% if is_submitted == true %}
     {% set submitted = 'submitted' %}
 {% endif %}
-
-<form name="sale" id="sale" method="post" class="needs-validation form {{ submitted }}" novalidate onsubmit=updateSalesAmount()>
+<div class="row">
+<div class="col-md-4">
+        <div class="">
+<form name="sale" id="sale" method="post" class="needs-validation user-form form {{ submitted }}" novalidate onsubmit=updateSalesAmount()>
     {{ form.hidden_tag() }}
-    <div class="col-md-6">
-        <div class="form-group row ">
+ 
             {% if data.heading %}
                 <h1> {{ data.heading }} </h1>
             {% else %}
                 <h1> Sale </h1>
             {% endif %}
 
-            <div class="row">
+
+            {{ render_field(form.party_name, class_="form-control", placeholder="Party Name") }}
+            {{ render_field(form.party_address, class_="form-control", placeholder="Party Address") }}
+            {{ render_field(form.gst_number, class_="form-control", placeholder="GST Number") }}
+            {{ render_field(form.vehicle_number, class_="form-control", placeholder="Vehicle Number") }}
+            {{ render_field(form.no_of_bags, class_="form-control", placeholder="Number of Bags") }}
+            {{ render_field(form.variety, class_="form-control", placeholder="Party Name") }}
+            {{ render_field(form.date, class_="form-control", placeholder="Party Name") }}
+            {{ render_field(form.quintol, class_="form-control", placeholder="Quintol") }}
+            {{ render_field(form.rate, class_="form-control", placeholder="Rate") }}
+            {{ render_field(form.amount, class_="form-control", placeholder="Amount") }}
+
+            <!-- <div class="row">
                 <div class="col-md-12">
                     {{ form.party_name.label(class_="col-sm-4 col-form-label") }}
 
@@ -138,9 +151,9 @@
                             <span style="color: red;">[{{ error }}]</span>
                         {% endfor %}
                     </div>
-                    <!--div class="input-group-addon">
+                    div class="input-group-addon">
                         <span class="glyphicon glyphicon-th"></span>
-                    </div-->
+                    </div-
                 </div>
             </div>
 
@@ -185,10 +198,15 @@
 
             <div class="col-sm-offset-4 col-sm-8">
                 {{ form.submit(class_="btn btn-default") }}
-            </div>
-        </div>
-    </div>
+            </div> -->
+
 </form>
+</div>
+</div>
+<div class="col-md-8" style="margin-top: 20px; padding-left: 20px; padding-right: 20px;">
 
 {% include 'core/sales_report.html' %}
+</div>
+</div>
 {% endblock %}
+

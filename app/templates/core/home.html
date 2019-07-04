@@ -13,10 +13,17 @@
 <!--input type="checkbox" name="Boiled" value="1"> Boiled <br>
 <input type="checkbox" name="HalfBoiled" value="1"> Half Boiled <br-->
 
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-6">
+                {% include 'core/purchases_report.html' %}
+        </div>
+        <div class="col-md-6">
+                {% include 'core/sales_report.html' %}
+        </div>
+    </div>
+    
 
     
-{% block content %}
-    {% include 'core/purchases_report.html' %}
-
-    {% include 'core/sales_report.html' %}
 {% endblock %}
