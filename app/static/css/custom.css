@@ -16,10 +16,6 @@ div.well {
   height: 250px;
 }
 
-/*   input:required{
-    border: 1px red;
-  } */
-
 .col-md-offset-4 {
   padding-left: 15px !important;
 }
@@ -32,61 +28,6 @@ div.well {
   border: 1px solid #FF4B2B;
 }
 
-/* .btn-primary{
-    background-color: #FF4B2B !important;
-    border-color: #FF4B2B !important;
-  } */
-
-/* body{
-/*     background: #00589F;
-    color: white; 
-  }
-  
-  div.well{
-    height: 250px;
-  } 
-  
-  .Absolute-Center {
-    margin: auto;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
-  }
-  
-  .Absolute-Center.is-Responsive {
-    width: 50%; 
-    height: 50%;
-    min-width: 200px;
-    max-width: 400px;
-    padding: 40px;
-  }
-   
-  #logo-container{
-    margin: auto;
-    margin-bottom: 10px;
-    width:200px;
-    height:30px;
-    background-image:url('http://placehold.it/200x30/000000/ffffff/&text=BRAND+LOGO');
-  }
-
-  .btn{
-    background: rebeccapurple !important;
-  } 
-
-  .row {
-    margin-top: 10px !important;
-    margin-bottom: 15px !important;
-  }
-  input:required{
-    border: 1px red;
-  } 
-  .col-md-offset-4{
-    padding-left: 15px !important;
-  }
-
-  .was-validated input:required:invalid  {
-    border: 1px solid  red;
-  } */
-
 .bg {
   margin: 0;
   padding: 0;
@@ -94,17 +35,11 @@ div.well {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* background: #ff0; */
   background-image: url("img/bg.jpg");
-  /* The image used */
   background-color: #cccccc;
-  /* Used if the image is unavailable */
   background-position: center;
-  /* Center the image */
   background-repeat: no-repeat;
-  /* Do not repeat the image */
   background-size: cover;
-  /* Resize the background image to cover the entire container */
 }
 
 img {
@@ -151,8 +86,6 @@ img {
   padding: 0;
   transition: 0.5s;
   pointer-events: none;
-  /* background: #fff; */
-  /* text-transform: uppercase; */
 }
 
 .login .input-group input:focus~span, .login .input-group input:valid~span {
@@ -160,9 +93,7 @@ img {
   left: 12px;
   font-size: 12px;
   padding: 2px 4px;
-  /* border: 1px solid #000; */
   border-radius: 3px;
-  /* background: #ff0; */
   background: #4da6ff;
   color: #fff;
 }
@@ -319,25 +250,6 @@ h1 {
   text-align: center;
 }
 
-/* input[type="text"],  input[type="password"],  input[type="date"],  input[type="datetime"],  input[type="email"],  input[type="number"],  input[type="search"],  input[type="tel"],  input[type="time"],  input[type="url"],  textarea,  select  {
-    background:  rgba(255, 255, 255, 0.1);
-    border:  none;
-    font-size:  16px;
-    height:  auto;
-    margin:  0;
-    outline:  0;
-    padding:  15px;
-    width:  100%;
-    background-color:  #e8eeef;
-    color:  #8a97a0;
-    box-shadow:  0 1px 0 rgba(0, 0, 0, 0.03) inset;
-    margin-bottom:  30px;
-} */
-
-/* input[type="radio"],  input[type="checkbox"]  {
-    margin:  0 4px 8px 0;
-} */
-
 select {
   padding: 6px;
   height: 32px;
@@ -441,4 +353,14 @@ label {
 .btn-primary {
   background-color: #4da6ff!important;
   border-color: #4da6ff!important;
+}
+.navbar-light .navbar-brand {
+  color: #ffffff !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #ffffff !important;
+}
+.settings{
+  fill: #ffffff;
 }
