@@ -161,8 +161,8 @@
     </nav>
     {% endif %}
 
-    {% macro render_field(field) %}
-    <!-- <div class="row">
+    {% macro render_purchase_field(field) %}
+    <div class="row">
         <div class="col-md-4">
             {{ field.label(class_="col-form-label") }}
         </div>
@@ -174,8 +174,10 @@
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </div>
-    </div> -->
+    </div>
+    {% endmacro %}
 
+    {% macro render_field(field) %}
     <div class="form-group">
         {{ field.label(class_="col-form-label") }}
         {{ field(**kwargs)|safe }}

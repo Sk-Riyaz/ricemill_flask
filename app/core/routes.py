@@ -1,8 +1,9 @@
 from flask import render_template, request, redirect, url_for, flash, abort, jsonify
 from flask_login import current_user, login_required
 
+import app
 from app.core import core_bp
-from app import db  #, logger
+from app import db
 from app.core.forms import PurchaseForm, SalesForm, ReportForm
 from app.models import PurchaseAgent, SaleAgent, Purchase, Sale
 from app import utilities
@@ -60,7 +61,8 @@ def home():
 
     purchases_data = Purchase.query.order_by(Purchase.created_on.desc()).all()
     sales_data = Sale.query.order_by(Sale.created_on.desc()).all()
-    return render_template("core/home.html", data=generic_data, purchases=purchases_data, sales=sales_data)
+    return render_template("core/home.html", data=generic_data,
+                           purchases=purchases_data, sales=sales_data)
 
 
 @core_bp.route('/purchase', methods=['GET', 'POST'])
@@ -79,11 +81,13 @@ def purchase():
         if status != 200:
             abort(status)
         flash("Purchase inserted Successfully")
-        #logger.info("Purchase inserted Successfully")
+        # logger.info("Purchase inserted Successfully")
         return redirect(url_for('core.purchase'))
 
     purchases_data = Purchase.query.order_by(Purchase.created_on.desc()).all()
-    return render_template("core/purchase.html", data=generic_data, form=form, purchases=purchases_data, is_submitted=form.is_submitted())
+    return render_template("core/purchase.html", data=generic_data,
+                           form=form, purchases=purchases_data,
+                           is_submitted=form.is_submitted())
 
 
 @core_bp.route('/sales', methods=['GET', 'POST'])
@@ -106,7 +110,8 @@ def sales():
         return redirect(url_for('core.sales'))
 
     sales_data = Sale.query.order_by(Sale.created_on.desc()).all()
-    return render_template("core/sales.html", data=generic_data, form=form, sales=sales_data, is_submitted=form.is_submitted())
+    return render_template("core/sales.html", data=generic_data, form=form,
+                           sales=sales_data, is_submitted=form.is_submitted())
 
 
 def getModelFor(form_type):
@@ -130,14 +135,26 @@ def report(form_type):
         abort(404)
 
     form = ReportForm()
-    form.agent.choices = utilities.get_agent_choices(type=eval(f"{form_type.capitalize()}Agent"))
+    form.agent.choices = utilities.get_report_agent_choices(
+        type=eval(f"{form_type.capitalize()}Agent"))
     if form.validate_on_submit():
-        model_data = model.query.filter(
-            model.created_on.between(
-                form.from_date.data, form.to_date.data)
-        ).all()
-        return render_template("core/report.html", data=generic_data, form=form, purchases=model_data, sales=model_data, is_submitted=form.is_submitted())
-    return render_template("core/report.html", data=generic_data, form=form)
+        print(form.agent.data)
+        if form.agent.data != 0:
+            model_data = model.query.filter(
+                model.created_on.between(
+                    form.from_date.data, form.to_date.data),
+                model.agent_id == form.agent.data
+            ).all()
+        else:
+            model_data = model.query.filter(
+                model.created_on.between(
+                    form.from_date.data, form.to_date.data)
+            ).all()
+        return render_template("core/report.html", data=generic_data,
+                               form=form, purchases=model_data,
+                               sales=model_data, is_submitted=True)
+    return render_template("core/report.html", data=generic_data,
+                           form=form, is_submitted=True)
 
 
 @core_bp.route('/report/<form_type>/detail', methods=['GET'])
@@ -159,4 +176,4 @@ def form_detail(form_type):
 @core_bp.route('/ajax/get', methods=['GET', 'POST'])
 def ajaxGet():
     print("ajaxGet Called")
-    return jsonify({'key': 'value', 'key2':'riyaz'})
+    return jsonify({'key': 'value', 'key2': 'riyaz'})

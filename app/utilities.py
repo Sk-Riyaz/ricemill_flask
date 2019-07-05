@@ -64,6 +64,11 @@ def get_agent_choices(**kwargs):
 
 
 @get_select_choice
+def get_report_agent_choices(**kwargs):
+    return [(agent.id, agent.name) for agent in kwargs.get("type").query.order_by(kwargs.get("type").name).all()]
+
+
+@get_select_choice
 def get_roles(**kwargs):
     return [(r.id, r.name) for r in Roles.query.order_by(Roles.id).all()]
     return []

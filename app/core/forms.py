@@ -98,9 +98,5 @@ class SalesForm(FlaskForm):
 class ReportForm(FlaskForm):
     from_date = DateField("From Date")
     to_date = DateField("To Date")
-    agent = SelectField("Agent", coerce=int, validators=[
-        DataRequired(message="Agent is required"),
-        InputRequired(message="Agent is required")
-    ])
+    agent = SelectField("Agent", coerce=int)
     submit = SubmitField('Submit')
-
