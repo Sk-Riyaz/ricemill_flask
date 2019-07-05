@@ -1,94 +1,39 @@
 {% extends 'base.html' %}
+{% from "macros.html" import render_report_detail_field with context %}
 
 {% block head %}
-    {% if data.title %}
-        <title> {{ data.title }} </title>
-    {% else %}
-        <title> Purchase </title>
-    {% endif %}
+{% if data.title %}
+<title> {{ data.title }} </title>
+{% else %}
+<title> Purchase Report </title>
+{% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="col-md-6">
-    <div class="form-group row">
-        {% if data.heading %}
+<div class=" row">
+    <div class="col-md-12">
+        <div class="form admin-form">
+            {% if data.heading %}
             <h1> {{ data.heading }} </h1>
-        {% else %}
-            <h1> Purchase </h1>
-        {% endif %}
+            {% else %}
+            <h1> Purchase Report </h1>
+            {% endif %}
 
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> RST Number </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.rstnumber }} </label>
-                </div>
-            </div>
-        </div>
+            {% set input_data = [
+                ("RST Number", form_data.rstnumber)
+                ,("Weight", form_data.weight)
+                ,("Variety", form_data.variety.name)
+                ,("Agent", form_data.agent.name)
+                ,("Moisture", form_data.moisture)
+                ,("Rate", form_data.rate)
+                ,("Date", form_data.timestamp)
+                ,("Amount", form_data.amount)
+	        ] %}
 
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Weight </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.weight }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Variety </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.variety.name }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Agent </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.agent.name }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Moisture </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.moisture }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Rate </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.rate }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Date </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.timestamp }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Amount </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.amount }} </label>
-                </div>
-            </div>
+            {% for each in input_data %}
+            {{ render_report_detail_field(each[0], each[1]) }}
+            {% endfor %}
         </div>
     </div>
 </div>
-
 {% endblock %}

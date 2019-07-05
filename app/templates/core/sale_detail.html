@@ -1,119 +1,41 @@
 {% extends 'base.html' %}
+{% from "macros.html" import render_report_detail_field with context %}
 
 {% block head %}
-    {% if data.title %}
-        <title> {{ data.title }} </title>
-    {% else %}
-        <title> Purchase </title>
-    {% endif %}
+{% if data.title %}
+<title> {{ data.title }} </title>
+{% else %}
+<title> Sale Report </title>
+{% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="col-md-6">
-    <div class="form-group row">
-        {% if data.heading %}
+<div class=" row">
+    <div class="col-md-12">
+        <div class="form admin-form">
+            {% if data.heading %}
             <h1> {{ data.heading }} </h1>
-        {% else %}
-            <h1> Purchase </h1>
-        {% endif %}
+            {% else %}
+            <h1> Sale Report </h1>
+            {% endif %}
 
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Part Name </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.party_name }} </label>
-                </div>
-            </div>
-        </div>
+            {% set input_data = [
+                ("Party Name", form_data.party_name)
+                ,("Party Address", form_data.party_address)
+                ,("GST Number", form_data.gst_number)
+                ,("Vehicle Number", form_data.vehicle_number)
+                ,("No of Bags", form_data.no_of_bags)
+                ,("Variety", form_data.variety.name)
+                ,("Agent", form_data.agent.name)
+                ,("Date", form_data.timestamp)
+                ,("Quintol", form_data.quintol)
+                ,("Rate", form_data.rate)
+                ,("Amount", form_data.amount)
+            ] %}
 
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Party Address </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.party_address }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> GST Number </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.gst_number }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Vehicle Number </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.vehicle_number }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> No of Bags </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.no_of_bags }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Variety </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.variety.name }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Agent </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.agent.name }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Date </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.timestamp }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Quintol </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.quintol }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Rate </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.rate }} </label>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <label class="col-sm-4 col-form-label"> Amount </label>
-                <div class="col-sm-8">
-                    <label class="form-control" disabled> {{ form_data.amount }} </label>
-                </div>
-            </div>
+            {% for each in input_data %}
+            {{ render_report_detail_field(each[0], each[1]) }}
+            {% endfor %}
         </div>
     </div>
 </div>

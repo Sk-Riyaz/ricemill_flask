@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from "macros.html" import render_report_field with context %}
 
 {% block head %}
 {% if data.title %}
@@ -14,17 +15,6 @@
 {% if is_submitted == true %}
 {% set submitted = 'submitted' %}
 {% endif %}
-
-{% macro render_report_field(field) %}
-<div class="form-group col-md-3">
-    {{ field.label }}
-    {{ field(**kwargs)|safe }}
-
-    {% for error in field.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
-</div>
-{% endmacro %}
 
 <div class="col-md-12">
     <form name="report" id="report" method="post" class="needs-validation form {{ submitted }}" novalidate>

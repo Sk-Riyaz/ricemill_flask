@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from "macros.html" import render_admin_field with context %}
 
 {% block head %}
 {% if data.title %}
@@ -7,9 +8,6 @@
 <title> Purchase </title>
 {% endif %}
 {% endblock %}
-
-<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/-->
-<!-- Auto generated from backend -->
 
 {% block content %}
 <div class="row">

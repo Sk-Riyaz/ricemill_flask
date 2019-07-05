@@ -1,0 +1,56 @@
+{% macro render_purchase_field(field) %}
+<div class="row">
+    <div class="col-md-4">
+        {{ field.label(class_="col-form-label") }}
+    </div>
+
+    <div class="col-md-8">
+        {{ field(**kwargs)|safe }}
+
+        {% for error in field.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_error(field) %}
+{% for error in field.errors %}
+<span style="color: red;">[{{ error }}]</span>
+{% endfor %}
+{% endmacro %}
+
+{% macro render_field(field) %}
+<div class="form-group">
+    {{ field.label(class_="col-form-label") }}
+    {{ field(**kwargs)|safe }}
+
+    {{ render_error(field) }}
+</div>
+{% endmacro %}
+
+
+{% macro render_admin_field(field) %}
+<div class="form-group">
+    {{ field.label(class_="col-form-label") }}
+    {{ field(**kwargs)|safe }}
+
+    {{ render_error(field) }}
+</div>
+{% endmacro %}
+
+{% macro render_report_field(field) %}
+<div class="form-group col-md-3">
+    {{ field.label }}
+    {{ field(**kwargs)|safe }}
+
+    {{ render_error(field) }}
+</div>
+{% endmacro %}
+
+{% macro render_report_detail_field(label, data) %}
+<div class="form-group">
+    <label class="col-form-label"> {{ label }} </label>
+    <input class="form-control" disabled value="{{data}}">
+</div>
+{% endmacro %}
