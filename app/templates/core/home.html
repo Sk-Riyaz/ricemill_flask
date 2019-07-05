@@ -1,29 +1,30 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    {% if data.title %}
-        <title> {{ data.title }} </title>
-    {% else %}
-        <title> Home </title>
-    {% endif %}
+{% if data.title %}
+<title> {{ data.title }} </title>
+{% else %}
+<title> Home </title>
+{% endif %}
 {% endblock %}
 
-<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/--> <!-- Auto generated from backend -->
+<!--p> Serial No </p> <input type="text" name="input1" id="input1" required/-->
+<!-- Auto generated from backend -->
 
 <!--input type="checkbox" name="Boiled" value="1"> Boiled <br>
 <input type="checkbox" name="HalfBoiled" value="1"> Half Boiled <br-->
 
 {% block content %}
-
-    <div class="row">
-        <div class="col-md-6">
-                {% include 'core/purchases_report.html' %}
-        </div>
-        <div class="col-md-6">
-                {% include 'core/sales_report.html' %}
-        </div>
+<div class="row">
+    <div class="col-md-6">
+        {% with form_type="purchase", outdata=purchases %}
+        {% include "core/_report.html" %}
+        {% endwith %}
     </div>
-    
-
-    
+    <div class="col-md-6">
+        {% with form_type="sale", outdata=sales %}
+        {% include "core/_report.html" %}
+        {% endwith %}
+    </div>
+</div>
 {% endblock %}

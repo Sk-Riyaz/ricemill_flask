@@ -1,4 +1,5 @@
-from flask import render_template, request, redirect, url_for, flash, abort, jsonify
+from flask import (render_template, request, redirect,
+                   url_for, flash, abort, jsonify)
 from flask_login import current_user, login_required
 
 import app
@@ -86,7 +87,7 @@ def purchase():
 
     purchases_data = Purchase.query.order_by(Purchase.created_on.desc()).all()
     return render_template("core/purchase.html", data=generic_data,
-                           form=form, purchases=purchases_data,
+                           form=form, outdata=purchases_data,
                            is_submitted=form.is_submitted())
 
 
@@ -105,13 +106,13 @@ def sales():
         status, e = sale_form_handler(form)
         if status != 200:
             abort(status)
-        #logger.info("Sale inserted Successfully")
+        # logger.info("Sale inserted Successfully")
         flash("Sale inserted Successfully")
         return redirect(url_for('core.sales'))
 
     sales_data = Sale.query.order_by(Sale.created_on.desc()).all()
     return render_template("core/sales.html", data=generic_data, form=form,
-                           sales=sales_data, is_submitted=form.is_submitted())
+                           outdata=sales_data, is_submitted=form.is_submitted())
 
 
 def getModelFor(form_type):
@@ -151,8 +152,7 @@ def report(form_type):
                     form.from_date.data, form.to_date.data)
             ).all()
         return render_template("core/report.html", data=generic_data,
-                               form=form, purchases=model_data,
-                               sales=model_data, is_submitted=True)
+                               form=form, outdata=model_data, is_submitted=True)
     return render_template("core/report.html", data=generic_data,
                            form=form, is_submitted=True)
 
@@ -170,7 +170,8 @@ def form_detail(form_type):
         abort(404)
 
     model_data = model.query.filter_by(id=id).first_or_404()
-    return render_template(f"core/{form_type}_detail.html", data=generic_data, form_data=model_data)
+    return render_template(f"core/{form_type}_detail.html",
+                           data=generic_data, form_data=model_data)
 
 
 @core_bp.route('/ajax/get', methods=['GET', 'POST'])

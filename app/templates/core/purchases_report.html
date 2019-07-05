@@ -3,14 +3,14 @@
     <tr>
         <th> Date </th>
         <th> Agent Name </th>
-        <th> RST No </th>
+        <th> Amount </th>
     </tr>
     {% for purchase in purchases %}
     <tr>
         <td><a href="/report/purchase/detail?id={{purchase.id}}">
                 {{ moment(purchase.created_on).format('DD-MM-YYYY HH:mm:ss') }} </a></td>
         <td>{{ purchase.agent.name }}</td>
-        <td>{{ purchase.rstnumber }}</td>
+        <td>{{ purchase.amount }}</td>
     </tr>
     {% endfor %}
 </table>

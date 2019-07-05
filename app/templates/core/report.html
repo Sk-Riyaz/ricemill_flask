@@ -38,7 +38,9 @@
         </div>
     </form>
 
-    {% include 'core/' + data.form_type + 's_report.html' %}
+    {% with form_type=data.form_type %}
+    {% include "core/_report.html" %}
+    {% endwith %}
 </div>
 
 {% endblock %}

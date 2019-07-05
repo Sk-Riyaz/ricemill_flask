@@ -54,7 +54,9 @@
     </div>
 
     <div class="col-md-8" style="margin-top: 20px; padding-left: 20px; padding-right: 20px;">
-        {% include 'core/sales_report.html' %}
+        {% with form_type="sale" %}
+        {% include "core/_report.html" %}
+        {% endwith %}
     </div>
 </div>
 
