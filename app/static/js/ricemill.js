@@ -67,14 +67,11 @@ function updatePurchaseAmount() {
     return true;
 };
 
-function updateSalesAmount() {
-    let rate = document.getElementById('rate');
-    let quintol = document.getElementById('quintol');
+function updateSalesAmount(quintol, rate) {
+    quintol = parseFloat(quintol);
+    rate = parseFloat(rate);
     let gst = 5;
-
-    let amt = document.getElementById('amount');
-    amt.value = (quintol.value * rate.value) + (quintol.value * rate.value * gst / 100);
-    return true;
+    return (quintol * rate) + (quintol * rate * gst / 100);
 };
 
 function changeaction() {
@@ -101,3 +98,26 @@ function getConfirmation() {
     */
 }
 
+$(document).ready(function () {
+    $("#sale #quintol").change(function () {
+        let rate = $("#rate").val();
+        if (!rate) {
+            console.log("rate is undefined", $("#quintol").val());
+            return;
+        }
+        console.log(this.value, $("#rate").val());
+        $("#sale #amount").value(updateSalesAmount(this.value, $("#rate").val()));
+    })
+})
+
+$(document).ready(function () {
+    $("#sale #rate").change(function () {
+        let quintol = $("#quintol").val();
+        if (!quintol) {
+            console.log("quintol is undefined", $("#rate").val());
+            return;
+        }
+        console.log(this.value, $("#rate").val());
+        $("#sale #amount").attr("value", updateSalesAmount(this.value, $("#rate").val()));
+    })
+})

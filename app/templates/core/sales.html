@@ -40,14 +40,14 @@
             {{ render_field(form.date, class_="form-control") }}
             {{ render_field(form.quintol, class_="form-control", placeholder="Quintol") }}
             {{ render_field(form.rate, class_="form-control", placeholder="Rate") }}
-            {{ render_field(form.amount, class_="form-control", placeholder="Amount") }}
+            {{ render_field(form.amount, class_="form-control", placeholder="Amount", disabled=true, value=0) }}
 
             <div class="row">
                 <div class="col-md-4 offset-md-0">
                     {{ form.submit(class_="btn btn-primary") }}
                 </div>
                 <div class="col-md-4 offset-md-4">
-                    <button class="btn btn-primary">Reset</button>
+                    <button class="btn btn-primary" onclick="this.form.reset();">Reset</button>
                 </div>
             </div>
         </form>

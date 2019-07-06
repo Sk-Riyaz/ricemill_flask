@@ -55,12 +55,10 @@ def get_select_choice(func):
 
 def get_variety_choices(**kwargs):
     return [(v.id, v.name) for v in Variety.query.order_by(Variety.name).all()]
-    return []
 
 
 def get_agent_choices(**kwargs):
     return [(agent.id, agent.name) for agent in kwargs.get("type").query.order_by(kwargs.get("type").name).all()]
-    return []
 
 
 @get_select_choice

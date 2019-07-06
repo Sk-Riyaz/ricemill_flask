@@ -134,7 +134,7 @@
                     {{ form.submit(class_="btn btn-primary") }}
                 </div>
                 <div class="col-md-2 offset-md-2">
-                    <button class="btn btn-primary">Reset</button>
+                    <button class="btn btn-primary" onclick="this.form.reset();">Reset</button>
                 </div>
             </div>
         </form>
@@ -146,8 +146,5 @@
         {% endwith %}
     </div>
 </div>
-
-
-
 
 {% endblock %}
