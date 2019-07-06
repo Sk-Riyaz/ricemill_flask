@@ -90,13 +90,22 @@ class SalesForm(FlaskForm):
         DataRequired(message="Rate is required"),
         InputRequired(message="Rate is required")
     ])
-    date = DateField("Date")
+    date = DateField("Date", validators=[
+        DataRequired(message="Date is required"),
+        InputRequired(message="Date is required")
+    ])
     amount = FloatField("Amount")
     submit = SubmitField('Submit')
 
 
 class ReportForm(FlaskForm):
-    from_date = DateField("From Date")
-    to_date = DateField("To Date")
+    from_date = DateField("From Date", validators=[
+        DataRequired(message="Rate is required"),
+        InputRequired(message="Rate is required")
+    ])
+    to_date = DateField("To Date", validators=[
+        DataRequired(message="Rate is required"),
+        InputRequired(message="Rate is required")
+    ])
     agent = SelectField("Agent", coerce=int)
     submit = SubmitField('Submit')
