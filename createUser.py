@@ -17,9 +17,9 @@ def create_roles():
     if Roles.query.all():
         return True
     try:
-        role_s = Roles(name="SUPER_USER")
-        role_a = Roles(name="ADMINISTRATOR")
-        role_u = Roles(name="USER")
+        role_s = Roles(name=Config.SUPER_USER_STR)
+        role_a = Roles(name=Config.ADMINISTRATOR_STR)
+        role_u = Roles(name=Config.USER_STR)
         db.session.add(role_s)
         db.session.add(role_a)
         db.session.add(role_u)

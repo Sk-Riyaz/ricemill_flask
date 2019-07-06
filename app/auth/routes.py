@@ -10,6 +10,7 @@ from app.models import User
 from app.utilities import write_to_db
 
 
+@auth_bp.route('/', methods=['GET', 'POST'])
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -27,10 +28,10 @@ def login():
             return redirect(url_for('auth.login'))
 
         if not user.active:
-            flash("You are not authorized to access this page. Please contact Administrator")
+            flash(
+                "You are not authorized to access this page. Please contact Administrator")
             return redirect(url_for('auth.login'))
 
-        #flash("User loggedin")
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         print(current_user.is_admin())

@@ -39,12 +39,13 @@ def create_app(config_class=Config):
 
     from app.auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(auth_bp, url_prefix='/')
 
     from app.core import core_bp
     app.register_blueprint(core_bp)
 
     from app.admin import admin_bp
-    app.register_blueprint(admin_bp)
+    app.register_blueprint(admin_bp, url_prefix='/admin')
 
     if not app.debug:  # and not app.testing:
         """

@@ -25,7 +25,6 @@
         }
         let varsel = document.getElementById('variety');
         if (varsel) {
-
             // create new option element
             let opt = document.createElement('option');
 
@@ -36,15 +35,13 @@
             opt.value = '';
 
             // add opt to end of select box (sel)
-
             varsel.prepend(opt);
             varsel.options[0].selected = true;
         }
 
-
-
         let agentsel = document.getElementById('agent');
         if (agentsel) {
+            // create new option element
             let agentopt = document.createElement('option');
 
             // create text node to add to option element (opt)
@@ -74,39 +71,16 @@ function updateSalesAmount(quintol, rate) {
     return (quintol * rate) + (quintol * rate * gst / 100);
 };
 
-function changeaction() {
-    //document.updateForm.action += document.submitname.split(":")[1];
-    alert("updateaction");
-}
-
-function getConfirmation() {
-    changeaction();
-    /*
-    {% if action != "delete" %}
-        return true;
-    {% endif %}
-    let userName = document.submitname;
-    let retVal = confirm("Do you want to delete [" +userName.split(":")[1] +"]?");
-    if( retVal == true ) {
-        document.updateForm.user.value = userName.split(":")[0];
-        let chagedVal = document.updateForm.user.value;
-        return true;
-    }
-    else {
-        return false;
-    }
-    */
-}
 
 $(document).ready(function () {
     $("#sale #quintol").change(function () {
         let rate = $("#rate").val();
         if (!rate) {
-            console.log("rate is undefined", $("#quintol").val());
+            // console.log("rate is undefined", $("#quintol").val());
             return;
         }
-        console.log(this.value, $("#rate").val());
-        $("#sale #amount").value(updateSalesAmount(this.value, $("#rate").val()));
+        // console.log(this.value, rate);
+        $("#sale #amount").value(updateSalesAmount(this.value, rate));
     })
 })
 
@@ -114,10 +88,10 @@ $(document).ready(function () {
     $("#sale #rate").change(function () {
         let quintol = $("#quintol").val();
         if (!quintol) {
-            console.log("quintol is undefined", $("#rate").val());
+            // console.log("quintol is undefined", $("#rate").val());
             return;
         }
-        console.log(this.value, $("#rate").val());
-        $("#sale #amount").attr("value", updateSalesAmount(this.value, $("#rate").val()));
+        // console.log(quintol, this.value);
+        $("#sale #amount").attr("value", updateSalesAmount(quintol, this.value));
     })
 })

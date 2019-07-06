@@ -1,10 +1,10 @@
 from flask import render_template, redirect, url_for, flash, abort
 from flask_login import current_user, login_user, logout_user, login_required
-#from flask_user import roles_required
+# from flask_user import roles_required
 from werkzeug.urls import url_parse
 
 from app.admin import admin_bp
-from app import db  # logger, login_manager, db
+from app import db
 from app.admin.forms import RegistrationForm, AgentForm, VarietyForm
 from app.models import User, PurchaseAgent, SaleAgent, Variety, Roles
 from config import Config
@@ -83,7 +83,7 @@ def is_form_support_action(form_type, action):
         'variety': ['add', 'delete']
     }
     return form_type_2_actions.get(form_type) is not None and \
-           action in form_type_2_actions.get(form_type)
+        action in form_type_2_actions.get(form_type)
 
 
 def get_form_for_type(form_type):
@@ -155,4 +155,5 @@ def admin_actions(action, form_type):
         # logger.info(f"{form_type} {action}ed successfully")
         return redirect(form_type)
     return render_template(f"admin/{action}_{form_type}.html", form=form,
-                           data=generic_data, users=User.query.order_by(User.username).all())
+                           data=generic_data,
+                           users=User.query.order_by(User.username).all())

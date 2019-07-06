@@ -13,10 +13,10 @@ def roles_required(roles):
             if not current_user.is_authenticated:
                 return redirect(
                     url_for('core.home',
-                            message=("You do not have access to that page."
-                                     " Please contact Admin!"))
+                            message=("Please login to access the page"))
                 )
             urole = current_user.get_role()
+            print("ROLES: ", urole, roles)
             if urole is None or urole not in roles:
                 return redirect(
                     url_for('core.home',
