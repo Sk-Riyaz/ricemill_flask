@@ -1,9 +1,10 @@
+{% if is_submitted or outdata %}
 <h1> {{form_type|capitalize}} Report </h1>
-<table border="1" id="report">
+<table class="table table-striped" border="1" id="report">
     <tr>
-        <th> Date </th>
-        <th> Agent Name </th>
-        <th> Amount </th>
+        <th scope="col"> Date </th>
+        <th scope="col"> Agent Name </th>
+        <th scope="col"> Amount </th>
     </tr>
     {% for each in outdata %}
     <tr>
@@ -13,4 +14,12 @@
         <td>{{ each.amount }}</td>
     </tr>
     {% endfor %}
+    {% if not outdata %}
+    <tr>
+        <td align="center" colspan="3">
+            No records available 
+        </td> 
+    </tr>
+    {% endif %}
 </table>
+{% endif %}

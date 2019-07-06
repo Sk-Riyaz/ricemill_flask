@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block content %}
+{% block login %}
 <div class="bg">
     <div class="login">
         <h2>Company Name</h2>
@@ -28,10 +28,10 @@
             </div>
 
             <label style="display: flex; align-items: center;">
-                <div style="margin-top: 0px !important; margin-right: 5px !important;">
+                <div style="margin-right: 5px !important;">
                     {{ form.remember_me() }}
                 </div>
-                {{ form.remember_me.label (style="margin-bottom: 0px !important") }}
+                {{ form.remember_me.label (style="margin-bottom: -2px !important") }}
             </label>
         </form>
     </div>

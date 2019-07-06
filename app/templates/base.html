@@ -2,64 +2,6 @@
 <html>
 
 <head>
-    <style>
-        #report {
-            border-collapse: collapse;
-            width: 97%;
-        }
-
-        #report tr {
-            line-height: 14px;
-        }
-
-        #report td,
-        #report th {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        #report tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        #report tr:hover {
-            background-color: #ddd;
-        }
-
-        #report th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #4da6ff;
-            color: white;
-        }
-
-        .dropdown:hover>.dropdown-menu {
-            display: block;
-        }
-
-        .dropdown-item:hover>.dropdown-menu {
-            display: block;
-        }
-
-        ul li {
-            list-style-type: none;
-            display: inline;
-        }
-
-        .navbar-nav .nav-link {
-            display: inline-block;
-        }
-
-        .ml-auto {
-            display: inline-block !important;
-        }
-
-        .dropdown>.dropdown-toggle:active {
-            pointer-events: none;
-        }
-    </style>
-
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/custom.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
     <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"> </script>
@@ -89,13 +31,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('core.sales') }}">Sales</a>
                 </li>
+                {% endif %}
 
+                {% if not current_user.is_super_user() %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Report
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-menu" style="margin: 0px" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ url_for('core.report', form_type='purchase') }}">Purchase</a>
                         <a class="dropdown-item" href="{{ url_for('core.report', form_type='sale') }}">Sales</a>
                     </div>
@@ -169,16 +113,19 @@
 </head>
 
 <body>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="errorMessage" align="center">
-        {% for message in messages %}
-        <p style="color : red">{{ message }}</p>
-        {% endfor %}
-    </div>
-    {% endif %}
-    {% endwith %}
-    {% block content %} {% endblock %}
+    <div class="container-fluid">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="errorMessage" align="center">
+            {% for message in messages %}
+            <p style="color : red">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% block content %} {% endblock %}
+    </div> 
+    {% block login %} {% endblock %}
 </body>
 
 </html>

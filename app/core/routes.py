@@ -151,10 +151,11 @@ def report(form_type):
                 model.created_on.between(
                     form.from_date.data, form.to_date.data)
             ).all()
+        # print(jsonify(model_data[0].as_dict()))
         return render_template("core/report.html", data=generic_data,
                                form=form, outdata=model_data, is_submitted=True)
     return render_template("core/report.html", data=generic_data,
-                           form=form, is_submitted=True)
+                           form=form, is_submitted=False)
 
 
 @core_bp.route('/report/<form_type>/detail', methods=['GET'])
