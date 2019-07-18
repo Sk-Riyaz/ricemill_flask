@@ -80,7 +80,7 @@ $(document).ready(function () {
             return;
         }
         // console.log(this.value, rate);
-        $("#sale #amount").value(updateSalesAmount(this.value, rate));
+        $("#sale #amount").attr("value", updateSalesAmount(this.value, rate));
     })
 })
 
