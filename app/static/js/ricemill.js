@@ -73,25 +73,24 @@ function updateSalesAmount(quintol, rate) {
 
 
 $(document).ready(function () {
-    $("#sale #quintol").change(function () {
+    $("#purchase #rate").change(function () {
         let rate = $("#rate").val();
         if (!rate) {
-            // console.log("rate is undefined", $("#quintol").val());
+            $("#purchase #amount").attr("value", 0);
             return;
         }
-        // console.log(this.value, rate);
-        $("#sale #amount").attr("value", updateSalesAmount(this.value, rate));
+        $("#purchase #amount").attr("value", rate);
     })
 })
 
 $(document).ready(function () {
-    $("#sale #rate").change(function () {
+    $("#sale #quintol, #sale #rate").change(function () {
         let quintol = $("#quintol").val();
-        if (!quintol) {
-            // console.log("quintol is undefined", $("#rate").val());
+        let rate = $("#rate").val();
+        if (!quintol || !rate) {
+            $("#sale #amount").attr("value", 0);
             return;
         }
-        // console.log(quintol, this.value);
-        $("#sale #amount").attr("value", updateSalesAmount(quintol, this.value));
+        $("#sale #amount").attr("value", updateSalesAmount(quintol, rate));
     })
 })
