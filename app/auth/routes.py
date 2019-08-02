@@ -5,8 +5,10 @@ from werkzeug.urls import url_parse
 
 from app import db
 from app.auth import auth_bp
-from app.auth.forms import LoginForm, ChangePasswordForm
+from app.auth.forms import LoginForm, ChangePasswordForm, ChangeUserPasswordForm
 from app.models import User
+from config import Config
+from app import utilities
 from app.utilities import write_to_db
 
 
@@ -69,8 +71,31 @@ def change_password():
             # logger.error(f"status: {status}, {e}")
             abort(status)
         return redirect(url_for('auth.logout',
-                                message=("You password changes succesfully."
+                                message=("Your password changes succesfully."
                                          " Please Login"))
                         )
     return render_template(f"auth/change_password.html", form=form,
+                           data=generic_data)
+
+
+@auth_bp.route('/change_any', methods=['GET', 'POST'])
+@login_required
+@utilities.roles_required([Config.SUPER_USER_STR])
+def change_user_password():
+    generic_data = {
+        "title": "Change User Password",
+        "heading": "Change User Password"
+    }
+    form = ChangeUserPasswordForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        user.set_password(form.new_password.data)
+        status, e = write_to_db(user)
+        db.session.commit()
+        if status != 200:
+            # logger.error(f"status: {status}, {e}")
+            abort(status)
+        flash(f"Password for {form.username.data} changed succesfully.")
+        return redirect(url_for('auth.change_user_password'))
+    return render_template(f"auth/change_user_password.html", form=form,
                            data=generic_data)
