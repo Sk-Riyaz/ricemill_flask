@@ -16,46 +16,6 @@
     }, false);
 })();
 
-
-(function () {
-    window.addEventListener('load', function () {
-        let formName = document.getElementsByTagName("form");
-        if (formName.length > 0 && formName[0].classList.contains("submitted")) {
-            return false;
-        }
-        let varsel = document.getElementById('variety');
-        if (varsel) {
-            // create new option element
-            let opt = document.createElement('option');
-
-            // create text node to add to option element (opt)
-            opt.appendChild(document.createTextNode('Select'));
-
-            // set value property of opt
-            opt.value = '';
-
-            // add opt to end of select box (sel)
-            varsel.prepend(opt);
-            varsel.options[0].selected = true;
-        }
-
-        let agentsel = document.getElementById('agent');
-        if (agentsel) {
-            // create new option element
-            let agentopt = document.createElement('option');
-
-            // create text node to add to option element (opt)
-            agentopt.appendChild(document.createTextNode('Select'));
-
-            // set value property of opt
-            agentopt.value = '';
-
-            agentsel.prepend(agentopt);
-            agentsel.options[0].selected = true;
-        }
-    });
-})();
-
 function updatePurchaseAmount() {
     let rate = document.getElementById("rate");
 
@@ -71,8 +31,14 @@ function updateSalesAmount(quintol, rate) {
     return (quintol * rate) + (quintol * rate * gst / 100);
 };
 
-
 $(document).ready(function () {
+    $("form").not('#report')
+        .$('select#variety, select#agent')
+        .prepend($("<option></option>")
+            .attr("value", "")
+            .attr("selected", "")
+            .text("Select"))
+
     $("#purchase #rate").change(function () {
         let rate = $("#rate").val();
         if (!rate) {
@@ -81,9 +47,7 @@ $(document).ready(function () {
         }
         $("#purchase #amount").attr("value", rate);
     })
-})
 
-$(document).ready(function () {
     $("#sale #quintol, #sale #rate").change(function () {
         let quintol = $("#quintol").val();
         let rate = $("#rate").val();
