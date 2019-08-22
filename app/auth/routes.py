@@ -71,17 +71,17 @@ def change_password():
             # logger.error(f"status: {status}, {e}")
             abort(status)
         return redirect(url_for('auth.logout',
-                                message=("Your password changes succesfully."
+                                message=("Your password changed succesfully."
                                          " Please Login"))
                         )
     return render_template(f"auth/change_password.html", form=form,
                            data=generic_data)
 
 
-@auth_bp.route('/change_any', methods=['GET', 'POST'])
+@auth_bp.route('/reset_password', methods=['GET', 'POST'])
 @login_required
 @utilities.roles_required([Config.SUPER_USER_STR])
-def change_user_password():
+def reset_user_password():
     generic_data = {
         "title": "Change User Password",
         "heading": "Change User Password"
@@ -96,6 +96,6 @@ def change_user_password():
             # logger.error(f"status: {status}, {e}")
             abort(status)
         flash(f"Password for {form.username.data} changed succesfully.")
-        return redirect(url_for('auth.change_user_password'))
-    return render_template(f"auth/change_user_password.html", form=form,
+        return redirect(url_for('auth.reset_user_password'))
+    return render_template(f"auth/reset_user_password.html", form=form,
                            data=generic_data)
